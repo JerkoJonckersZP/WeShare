@@ -4,7 +4,7 @@
     $firs_tname = $_POST['first-name'];
     $last_name = $_POST['last-name'];
     $email_address = $_POST['email-address'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     
     $sql = "SELECT * 
             FROM users 

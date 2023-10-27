@@ -7,13 +7,15 @@
     
     $sql = "SELECT * 
             FROM users 
-            WHERE email_address = '".$email_address."'
-            AND password = '".$password."'";
+            WHERE email_address = '".$email_address."'";
     $result = $mysqli->query($sql);
 
-    if(mysqli_num_rows($result) == 1) {
-        $row = $result->fetch_assoc();
-        $_SESSION['userid'] = $row['id'];
+    $row = $result->fetch_assoc();
+
+    if(password_verify($_POST['password'], $row['password'])) {
+        if(mysqli_num_rows($result) == 1) {
+            $_SESSION['userid'] = $row['id'];
+        }
     }
 
     header("Location: index.php");
