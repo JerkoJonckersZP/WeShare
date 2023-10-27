@@ -1,5 +1,5 @@
 <?php
-    include $_SERVER['DOCUMENT_ROOT'] . '/weshare/src/database/config.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/weshare/src/database/config.php';
 
     session_start();
 ?>
@@ -10,8 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.8.1/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="shortcut icon" href="exodius.png" type="image/x-icon">
-    <title>Exodius</title>
+    <title>WeShare</title>
 </head>
 <body class="text-black">
     <div class="p-3">
@@ -61,7 +60,7 @@
                     <div class="dropdown dropdown-end">
                         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                             <div class="w-10 rounded-full">
-                                <img src="default.png"/>
+                                <img src="../public/images/default.png"/>
                             </div>
                         </label>
                         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -82,7 +81,7 @@
                         <form method='dialog'>
                         <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
                         </form>
-                        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#34a853]'>IN</span></h3>
+                        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#570df8]'>IN</span></h3>
                         <p class='mt-3 mb-3'>Don't have an account yet? <span onclick='sign_in_modal.close();sign_up_modal.showModal()' class='underline font-bold hover:cursor-pointer'>Sign Up</span></p>
                         <div class='form-control w-full'>
                             <form method='post' action='sign-in.php'>
@@ -105,7 +104,7 @@
                         <form method='dialog'>
                             <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
                         </form>
-                        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#34a853]'>UP</span></h3>
+                        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#570df8]'>UP</span></h3>
                         <p class='mt-3 mb-3'>Already have an account? <span onclick='sign_up_modal.close();sign_in_modal.showModal()' class='underline font-bold hover:cursor-pointer'>Sign In</span></p>
                         <div class='form-control w-full'>
                             <form method='post' action='sign-up.php'>

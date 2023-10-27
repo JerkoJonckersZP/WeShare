@@ -1,3 +1,3 @@
 <?php
-    include 'components/navbar.php';
+    require_once 'components/navbar.php';
 ?>
