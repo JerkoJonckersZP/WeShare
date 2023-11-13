@@ -1,8 +1,7 @@
 <?php
     require_once 'database/config.php';
 
-    $firs_tname = $_POST['first-name'];
-    $last_name = $_POST['last-name'];
+    $username = $_POST['username'];
     $email_address = $_POST['email-address'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     
@@ -12,8 +11,8 @@
     $result = $mysqli->query($sql);
 
     if(mysqli_num_rows($result) == 0) {
-        $sql = "INSERT INTO users (first_name, last_name, email_address, password, profile_picture)
-                VALUES ('".$firs_tname."','".$last_name."','".$email_address."','".$password."','default.png')";
+        $sql = "INSERT INTO users (username, email_address, password)
+                VALUES ('".$username."','".$email_address."','".$password."')";
         $result = $mysqli->query($sql);
 
         header("Location: index.php");

@@ -14,17 +14,22 @@
 </head>
 <body class="text-black">
     <div class="p-3">
-        <div class="navbar bg-base-100 max-w-7xl mx-auto flex justify-between items-center rounded-xl mb-3">
+        <div class="navbar bg-base-100 max-w-7xl mx-auto flex justify-between items-center rounded-xl">
             <div class="flex-1">
                 <a href="index.php" class="mr-3 normal-case text-3xl font-extrabold text-[#570df8]">WE<span class="text-black">SHARE</span></a>
                 <div class="form-control ml-3">
                     <form method="post" action="index.php">
                         <div class="form-control">
                             <div class="input-group">
-                                <input type="text" placeholder="Search…" class="input input-bordered w-72"/>
+                                <input type="text" placeholder="Search…" name="query" class="input input-bordered w-72"/>
                                 <button type="submit" name="search-button" class="btn btn-square bg-[#f2f2f2]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                                 </button>
+                                <?php
+                                    if(isset($_POST['search-button'])) {
+                                        header("Location: search.php?query=".$_POST['query']."");
+                                    }
+                                ?>
                             </div>
                         </div>
                     </form>
@@ -109,13 +114,9 @@
                         <div class='form-control w-full'>
                             <form method='post' action='sign-up.php'>
                                 <label class='label'>
-                                    <span class='label-text'>First name</span>
+                                    <span class='label-text'>Username</span>
                                 </label>
-                                <input type='text' name="first-name" placeholder='Enter your first name' class='input input-bordered w-full' required/>
-                                <label class='label'>
-                                    <span class='label-text'>Last name</span>
-                                </label>
-                                <input type='text' name="last-name" placeholder='Enter your last name' class='input input-bordered w-full' required/>
+                                <input type='text' name="username" placeholder='Enter your username' class='input input-bordered w-full' required/>
                                 <label class='label'>
                                     <span class='label-text'>Email Address</span>
                                 </label>
