@@ -14,9 +14,9 @@
 </head>
 <body class="text-black">
     <div class="p-3">
-        <div class="navbar bg-base-100 max-w-7xl mx-auto flex justify-between items-center rounded-xl">
+        <div class="navbar bg-base-100 max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex-1">
-                <a href="index.php" class="mr-3 normal-case text-3xl font-extrabold text-[#570df8]">WE<span class="text-black">SHARE</span></a>
+                <a href="index.php" class="mr-3 normal-case text-3xl font-extrabold text-[#1a56db]">WE<span class="text-black">SHARE</span></a>
                 <div class="form-control ml-3">
                     <form method="post" action="index.php">
                         <div class="form-control">
@@ -51,7 +51,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                             </svg>
-                            <span class="badge badge-xs badge-primary indicator-item bg-[#570df8] border-[#570df8]"></span>
+                            <span class="badge badge-xs badge-primary indicator-item bg-[#1a56db] border-[#1a56db]"></span>
                         </div>
                     </button>
                     <button class="btn btn-ghost btn-circle">
@@ -80,59 +80,12 @@
                     ";
                 }
             ?>
-                <!-- Sign In Modal -->
-                <dialog id='sign_in_modal' class='modal'>
-                    <div class='modal-box'>
-                        <form method='dialog'>
-                        <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
-                        </form>
-                        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#570df8]'>IN</span></h3>
-                        <p class='mt-3 mb-3'>Don't have an account yet? <span onclick='sign_in_modal.close();sign_up_modal.showModal()' class='underline font-bold hover:cursor-pointer'>Sign Up</span></p>
-                        <div class='form-control w-full'>
-                            <form method='post' action='sign-in.php'>
-                                <label class='label'>
-                                    <span class='label-text'>Email Address</span>
-                                </label>
-                                <input type='email' name="email-address" placeholder='you@example.com' class='input input-bordered w-full' required/>
-                                <label class='label'>
-                                    <span class='label-text'>Password</span>
-                                </label>
-                                <input type='password' name="password" placeholder='Enter your password' class='input input-bordered w-full' required/>
-                                <input type='submit' value='SIGN IN' class='btn mt-3 bg-[#f2f2f2] w-full'/>
-                            </form>
-                        </div>
-                    </div>
-                </dialog>
-                <!-- Sign Up Modal -->
-                <dialog id='sign_up_modal' class='modal'>
-                    <div class='modal-box'>
-                        <form method='dialog'>
-                            <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
-                        </form>
-                        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#570df8]'>UP</span></h3>
-                        <p class='mt-3 mb-3'>Already have an account? <span onclick='sign_up_modal.close();sign_in_modal.showModal()' class='underline font-bold hover:cursor-pointer'>Sign In</span></p>
-                        <div class='form-control w-full'>
-                            <form method='post' action='sign-up.php'>
-                                <label class='label'>
-                                    <span class='label-text'>Username</span>
-                                </label>
-                                <input type='text' name="username" placeholder='Enter your username' class='input input-bordered w-full' required/>
-                                <label class='label'>
-                                    <span class='label-text'>Email Address</span>
-                                </label>
-                                <input type='email' name="email-address" placeholder='you@example.com' class='input input-bordered w-full' required/>
-                                <label class='label'>
-                                    <span class='label-text'>Password</span>
-                                </label>
-                                <input type='password' name="password" placeholder='Create a password' class='input input-bordered w-full' required/>
-                                <input type='submit' value='SIGN UP' class='btn mt-3 bg-[#f2f2f2] w-full'/>
-                            </form>
-                        </div>
-                    </div>
-                </dialog>
             </div>
         </div>
     </div>
 </body>
 </html>
+<?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/weshare/src/components/modals.php';
+?>
 
