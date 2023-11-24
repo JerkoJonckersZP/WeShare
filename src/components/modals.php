@@ -1,3 +1,11 @@
+<?php
+    if(isset($_SESSION['userid'])) {
+        $sql = "SELECT * FROM users WHERE id = '".$_SESSION['userid']."'";
+        $result = $mysqli->query($sql);
+
+        $user = $result->fetch_assoc();
+    }
+?>
 <!-- Sign In Modal -->
 <dialog id='sign_in_modal' class='modal'>
     <div class='modal-box'>
@@ -71,6 +79,37 @@
                 </label>
                 <input type="file" id="photo" name="photo" class="hidden" accept="image/*"/>
                 <input type='submit' value='CREATE POST' class='btn mt-3 bg-[#f2f2f2] w-full'/>
+            </form>
+        </div>
+    </div>
+</dialog>
+<!-- Edit Profile Modal -->
+<dialog id='edit_profile_modal' class='modal'>
+    <div class='modal-box'>
+        <form method='dialog'>
+            <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
+        </form>
+        <h3 class='font-bold text-2xl'>EDIT <span class='text-[#1a56db]'>PROFILE</span></h3>
+        <div class='form-control w-full'>
+            <form method='post' action='edit-profile.php' enctype="multipart/form-data">
+                <label class='label'>
+                    <span class='label-text'>Username</span>
+                </label>
+                <input type='text' name="username" placeholder='Enter your username' value='<?= $user['username'] ?>' class='input input-bordered w-full' maxlength="15" required/>
+                <label class="label">
+                    <span class="label-text">Description</span>
+                </label>
+                <textarea class="textarea textarea-bordered h-28 w-full resize-none mb-1" name="description" placeholder="Enter your description" maxlength="160"><?= $user['description'] ?></textarea>
+                <label for="profile-picture">
+                    <span class="btn w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                        PROFILE PICTURE
+                    </span>
+                </label>
+                <input type="file" id="profile-picture" name="profile-picture" class="hidden" accept="image/*"/>
+                <input type='submit' value='EDIT PROFILE' class='btn mt-3 bg-[#f2f2f2] w-full'/>
             </form>
         </div>
     </div>
