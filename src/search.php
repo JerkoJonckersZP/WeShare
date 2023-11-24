@@ -1,7 +1,9 @@
 <?php
     require_once 'components/navbar.php';
 
-    $query = $_GET['query'];
+    if(isset($_GET['query'])) {
+        $query = $_GET['query'];
+    }
 
     if(!(empty($query))) {
         $sql = "SELECT * 
