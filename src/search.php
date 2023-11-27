@@ -19,13 +19,13 @@
 
         if(mysqli_num_rows($result) == 0) {
             echo "
-            <div class='w-2/4 mx-auto'>
+            <div class='w-2/4 mx-auto mr-3 ml-3'>
                 <h1 class='text-5xl font-bold mb-3 text-center'>Uh-oh!</h1>
                 <p class='text-center'>It seems that there are no results for the search query you entered.<br>Don't worry, though! Try using a different search query.<br>Happy searching!</p>
             </div>";
         } else {
             echo '
-            <div class="overflow-x-auto w-2/4 mx-auto">
+            <div class="overflow-x-auto w-2/4 mx-auto mr-3 ml-3">
                 <table class="table">
                     <thead>
                         <tr>
@@ -66,7 +66,7 @@
         }
     } else {
         echo "
-        <div class='w-2/4 mx-auto'>
+        <div class='w-2/4 mx-auto mr-3 ml-3'>
             <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
             <p class='text-center'>It looks like you forgot to enter a search query. Please enter a search query in the search bar, and we'll do our best to find what you're looking for.<br>Happy searching!</p>
         </div>";
