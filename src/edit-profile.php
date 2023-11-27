@@ -4,6 +4,13 @@
 
     $username = $_POST['username'];
     $description = $_POST['description'];
+
+    if($_POST['private-account'] == "on") {
+        $private_account = 1;
+    } else {
+        $private_account = 0;
+    }
+
     $profile_picture = $_FILES['profile-picture']['name'];
     $profile_picture_temporary = $_FILES['profile-picture']['tmp_name'];
     $upload_directory = $_SERVER['DOCUMENT_ROOT'] . '/weshare/public/images/';
@@ -24,13 +31,13 @@
                 move_uploaded_file($profile_picture_temporary, $upload_directory . $profile_picture);
 
                 $sql = "UPDATE users
-                    SET username = '".$username."', description = '".$description."', profile_picture = '".$profile_picture."' 
-                    WHERE id = ".$_SESSION['userid']."";
+                        SET username = '".$username."', description = '".$description."', profile_picture = '".$profile_picture."', private_account = '".$private_account."' 
+                        WHERE id = ".$_SESSION['userid']."";
                 $result = $mysqli->query($sql);
             } else {
                 $sql = "UPDATE users
-                    SET username = '".$username."', description = '".$description."' 
-                    WHERE id = ".$_SESSION['userid']."";
+                        SET username = '".$username."', description = '".$description."', private_account = '".$private_account."' 
+                        WHERE id = ".$_SESSION['userid']."";
                 $result = $mysqli->query($sql);
             }
         }

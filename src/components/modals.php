@@ -4,6 +4,12 @@
         $result = $mysqli->query($sql);
 
         $user = $result->fetch_assoc();
+
+        if($user['private_account'] == 1) {
+            $private_account_toggle = "checked";
+        } else {
+            $private_account_toggle = "";
+        }
     }
 ?>
 <!-- Sign In Modal -->
@@ -100,6 +106,10 @@
                     <span class="label-text">Description</span>
                 </label>
                 <textarea class="textarea textarea-bordered h-28 w-full resize-none mb-1" name="description" placeholder="Enter your description" maxlength="160"><?= $user['description'] ?></textarea>
+                <label class="label cursor-pointer mb-3">
+                    <span class="label-text">Private account</span> 
+                    <input type="checkbox" name="private-account" class="toggle" <?= $private_account_toggle ?>/>
+                </label>
                 <label for="profile-picture">
                     <span class="btn w-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
