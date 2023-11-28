@@ -18,15 +18,14 @@
     if(isset($_SESSION['userid'])) {
         if(isset($username)) {
             if(!(empty($profile_picture))) {
-                $i = 1;
-                
-                do {
-                    $profile_picture_info = pathinfo($profile_picture);
-                    $new_profile_picture = $i . "." . $profile_picture_info['extension'];
-                    $profile_picture = $new_profile_picture;
-            
-                    $i++;
-                } while (file_exists($upload_directory . $profile_picture));
+                $sql = "SELECT * FROM users WHERE id = '".$_SESSION['userid']."'";
+                $result = $mysqli->query($sql);
+
+                $user = $result->fetch_assoc();
+
+                $profile_picture_info = pathinfo($profile_picture);
+                $new_profile_picture = "profile_picture_" . $user['id'] . ".png";
+                $profile_picture = $new_profile_picture;
             
                 move_uploaded_file($profile_picture_temporary, $upload_directory . $profile_picture);
 

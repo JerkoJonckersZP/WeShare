@@ -1,4 +1,6 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/weshare/src/database/config.php';
+
     if(isset($_SESSION['userid'])) {
         $sql = "SELECT * FROM users WHERE id = '".$_SESSION['userid']."'";
         $result = $mysqli->query($sql);
