@@ -2,6 +2,10 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/weshare/src/database/config.php';
 
     session_start();
+
+    if(isset($_POST['search-button'])) {
+        header("Location: search.php?query=".$_POST['query']."");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -25,11 +29,6 @@
                                 <button type="submit" name="search-button" class="btn btn-square bg-[#f2f2f2]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                                 </button>
-                                <?php
-                                    if(isset($_POST['search-button'])) {
-                                        header("Location: search.php?query=".$_POST['query']."");
-                                    }
-                                ?>
                             </div>
                         </div>
                     </form>

@@ -10,15 +10,14 @@
     if(isset($_SESSION['userid'])) {
         if(isset($message)) {
             if(!(empty($photo))) {
-                $i = 1;
+                $sql = "SELECT * FROM posts WHERE user = '".$_SESSION['userid']."'";
+                $result = $mysqli->query($sql);
+
+                $postid = mysqli_num_rows($result) + 1;
             
-                do {
-                    $photo_info = pathinfo($photo);
-                    $new_photo = $i . "." . $photo_info['extension'];
-                    $photo = $new_photo;
-        
-                    $i++;
-                } while (file_exists($upload_directory . $photo));
+                $photo_info = pathinfo($photo);
+                $new_photo = $_SESSION['userid'] . "_post_" . $postid . ".png";
+                $photo = $new_photo;
         
                 move_uploaded_file($photo_temporary, $upload_directory . $photo);
             }
