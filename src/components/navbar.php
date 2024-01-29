@@ -20,7 +20,7 @@
     <div class="p-3">
         <div class="navbar bg-base-100 max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex-1">
-                <a href="index.php" class="mr-3 normal-case text-3xl font-extrabold text-[#1a56db]">WE<span class="text-black">SHARE</span></a>
+                <a href="index.php" class="mr-3 normal-case text-3xl font-extrabold text-[#1987ff]">WE<span class="text-black">SHARE</span></a>
                 <div class="form-control ml-3">
                     <form method="post" action="index.php">
                         <div class="form-control">
@@ -37,6 +37,13 @@
             <div class="flex-none gap-2">
             <?php
                 if(isset($_SESSION['userid'])) {
+                    $sql = "SELECT * 
+                            FROM users 
+                            WHERE id = '".$_SESSION['userid']."'";
+                    $result = $mysqli->query($sql);
+
+                    $user = $result->fetch_assoc();
+
                     echo '
                     <a href="index.php" class="btn btn-ghost btn-circle">
                     <div class="indicator flex items-center">
@@ -50,7 +57,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                             </svg>
-                            <span class="badge badge-xs badge-primary indicator-item bg-[#1a56db] border-[#1a56db]"></span>
+                            <span class="badge badge-xs badge-primary indicator-item bg-[#1987ff] border-[#1987ff]"></span>
                         </div>
                     </button>
                     <button class="btn btn-ghost btn-circle">
@@ -64,11 +71,11 @@
                     <div class="dropdown dropdown-end">
                         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                             <div class="w-10 rounded-full">
-                                <img src="../public/images/default.png"/>
+                                <img src="../public/images/'.$user['profile_picture'].'"/>
                             </div>
                         </label>
                         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                            <li><a>Profile</a></li>
+                            <li><a href="profile.php?user='.$_SESSION['userid'].'">Profile</a></li>
                             <li><a href="sign-out.php">Sign out</a></li>
                         </ul>
                     </div>

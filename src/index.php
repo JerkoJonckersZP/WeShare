@@ -3,31 +3,27 @@
 ?>
 <html>
 <body>
-    <div class="flex max-w-7xl mx-auto">
+    <div class="flex max-w-7xl mx-auto items-start">
         <div class="w-1/4">
+            <div class="p-3">
+                <a href='index.php'>
+                    <button class="btn btn-ghost justify-start w-full mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                        HOME
+                    </button>
+                </a>
+                <?php
+                    if(isset($_SESSION['userid'])) {
+                        echo '
+                        <button class="btn w-full" onclick="create_post_modal.showModal()">CREATE POST</button>
+                        ';
+                    }
+                ?>
+            </div>
         </div>
         <div class="w-2/4 mr-3 ml-3">
-            <?php
-                if(isset($_SESSION['userid'])) {
-                    echo '<button class="btn w-full mb-3" onclick="create_post_modal.showModal()">CREATE POST</button>';
-                    echo '<button class="btn w-full mb-3" onclick="edit_profile_modal.showModal()">EDIT PROFILE</button>';
-                }
-            ?>
-            <!--
-            <div class="p-3">
-                <div class="flex items-center space-x-3 mb-3">
-                    <div class="mask mask-squircle w-12 h-12 rounded-full">
-                        <img src="../public/images/default.png"/>
-                    </div>
-                    <div>
-                        <p class="font-bold">Jerko Jonckers</p>
-                        <div class="text-sm opacity-50">14/11/2023</div>
-                    </div>
-                </div>
-                <p class="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non in atque reiciendis eveniet, doloremque incidunt iusto exercitationem est temporibus repellendus nulla odit, deleniti repellat eum reprehenderit, voluptate cum ducimus fugiat.</p>
-                <img class="mx-auto" src="../public/images/test.png">
-            </div>
-            !-->
         </div>
         <div class="w-1/4">
         </div>

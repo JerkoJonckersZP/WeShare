@@ -3,7 +3,7 @@
     session_start();
 
     $username = $_POST['username'];
-    $description = $_POST['description'];
+    $description = trim($_POST['description']);
 
     if($_POST['private-account'] == "on") {
         $private_account = 1;
@@ -23,8 +23,10 @@
 
                 $user = $result->fetch_assoc();
 
+                unlink($upload_directory . $user['profile_picture']);
+
                 $profile_picture_info = pathinfo($profile_picture);
-                $new_profile_picture = "profile_picture_" . $user['id'] . ".png";
+                $new_profile_picture = "profile_picture_" . $user['id'] . "_" . time() .".png";
                 $profile_picture = $new_profile_picture;
             
                 move_uploaded_file($profile_picture_temporary, $upload_directory . $profile_picture);
@@ -42,5 +44,5 @@
         }
     }
     
-    header("Location: index.php");
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 ?>

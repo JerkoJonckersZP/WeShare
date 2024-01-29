@@ -2,7 +2,7 @@
     require_once 'database/config.php';
     session_start();
 
-    $message = $_POST['message'];
+    $message = trim($_POST['message']);
     $photo = $_FILES['photo']['name'];
     $photo_temporary = $_FILES['photo']['tmp_name'];
     $upload_directory = $_SERVER['DOCUMENT_ROOT'] . '/weshare/public/images/';
@@ -10,13 +10,8 @@
     if(isset($_SESSION['userid'])) {
         if(isset($message)) {
             if(!(empty($photo))) {
-                $sql = "SELECT * FROM posts WHERE user = '".$_SESSION['userid']."'";
-                $result = $mysqli->query($sql);
-
-                $postid = mysqli_num_rows($result) + 1;
-            
                 $photo_info = pathinfo($photo);
-                $new_photo = $_SESSION['userid'] . "_post_" . $postid . ".png";
+                $new_photo = "post_" . $_SESSION['userid'] . "_" . time() . ".png";
                 $photo = $new_photo;
         
                 move_uploaded_file($photo_temporary, $upload_directory . $photo);
@@ -29,5 +24,5 @@
         }
     }
 
-    header("Location: index.php");
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 ?>
