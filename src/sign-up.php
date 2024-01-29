@@ -16,11 +16,11 @@
                     VALUES ('".$username."','".$email_address."','".$password."')";
             $result = $mysqli->query($sql);
 
-            header("Location: index.php");
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         } else {
-            header("Location: index.php");
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     } else {
-        header("Location: index.php");
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 ?>

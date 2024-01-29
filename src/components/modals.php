@@ -20,7 +20,7 @@
         <form method='dialog'>
             <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
         </form>
-        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#1a56db]'>IN</span></h3>
+        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#1987ff]'>IN</span></h3>
         <p class='mt-3 mb-3'>Don't have an account yet? <span onclick='sign_in_modal.close();sign_up_modal.showModal()' class='underline font-bold hover:cursor-pointer'>Sign Up</span></p>
         <div class='form-control w-full'>
             <form method='post' action='sign-in.php'>
@@ -43,7 +43,7 @@
         <form method='dialog'>
             <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
         </form>
-        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#1a56db]'>UP</span></h3>
+        <h3 class='font-bold text-2xl'>SIGN <span class='text-[#1987ff]'>UP</span></h3>
         <p class='mt-3 mb-3'>Already have an account? <span onclick='sign_up_modal.close();sign_in_modal.showModal()' class='underline font-bold hover:cursor-pointer'>Sign In</span></p>
         <div class='form-control w-full'>
             <form method='post' action='sign-up.php'>
@@ -70,7 +70,7 @@
         <form method='dialog'>
             <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
         </form>
-        <h3 class='font-bold text-2xl'>CREATE <span class='text-[#1a56db]'>POST</span></h3>
+        <h3 class='font-bold text-2xl'>CREATE <span class='text-[#1987ff]'>POST</span></h3>
         <div class='form-control w-full'>
             <form method='post' action='create-post.php' enctype="multipart/form-data">
                 <label class="label">
@@ -97,7 +97,7 @@
         <form method='dialog'>
             <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
         </form>
-        <h3 class='font-bold text-2xl'>EDIT <span class='text-[#1a56db]'>PROFILE</span></h3>
+        <h3 class='font-bold text-2xl'>EDIT <span class='text-[#1987ff]'>PROFILE</span></h3>
         <div class='form-control w-full'>
             <form method='post' action='edit-profile.php' enctype="multipart/form-data">
                 <label class='label'>
