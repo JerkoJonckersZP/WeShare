@@ -8,7 +8,7 @@
     $upload_directory = $_SERVER['DOCUMENT_ROOT'] . '/weshare/public/images/';
 
     if(isset($_SESSION['userid'])) {
-        if(isset($message)) {
+        if(!(empty($message))) {
             if(!(empty($photo))) {
                 $photo_info = pathinfo($photo);
                 $new_photo = "post_" . $_SESSION['userid'] . "_" . time() . ".png";
@@ -24,5 +24,9 @@
         }
     }
 
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    if(isset($_SERVER['HTTP_REFERER'])) {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+    } else {
+        header("Location: index.php");
+    }
 ?>
