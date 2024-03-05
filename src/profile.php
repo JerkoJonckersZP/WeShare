@@ -158,35 +158,142 @@
 
                         echo '</div>';
 
-                        $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
-                                FROM posts
-                                INNER JOIN users ON (posts.user = users.id) 
-                                WHERE users.id = '".$_GET['user']."'
-                                ORDER BY posts.created_at DESC";
-                        $result = $mysqli->query($sql);
-
-                        while ($post = $result->fetch_assoc()) {
-                            echo '
-                            <div class="p-3">
-                                <div class="flex items-center space-x-3 mb-3">
-                                    <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                        <img src="../public/images/'. $post['profile_picture'] .'"/>
+                        if(isset($_SESSION['userid'])) {
+                            if(!($_GET['user'] == $_SESSION['userid'])) {
+                                if($user['private_account'] == 1) {
+                                    $sql = "SELECT * 
+                                            FROM friends 
+                                            WHERE user_one = '".$_GET['user']."' AND user_two = '".$_SESSION['userid']."' OR user_one = '".$_SESSION['userid']."' AND user_two = '".$_GET['user']."'";
+                                    $result = $mysqli->query($sql);
+    
+                                    if(mysqli_num_rows($result) == 1) {
+                                        $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
+                                                FROM posts
+                                                INNER JOIN users ON (posts.user = users.id) 
+                                                WHERE users.id = '".$_GET['user']."'
+                                                ORDER BY posts.created_at DESC";
+                                        $result = $mysqli->query($sql);
+    
+                                        while ($post = $result->fetch_assoc()) {
+                                            echo '
+                                            <div class="p-3">
+                                                <div class="flex items-center space-x-3 mb-3">
+                                                    <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                        <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-bold">'.$post['username'].'</p>
+                                                        <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                    </div>
+                                                </div>
+                                                <p class="break-words">'. nl2br($post['message']) .'</p>';
+                
+                                                if(!empty($post['photo'])) {
+                                                    echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
+                                                }
+                
+                                            echo '
+                                            </div>
+                                            ';
+                                        }
+                                    }
+                                } else {
+                                    $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
+                                            FROM posts
+                                            INNER JOIN users ON (posts.user = users.id) 
+                                            WHERE users.id = '".$_GET['user']."'
+                                            ORDER BY posts.created_at DESC";
+                                    $result = $mysqli->query($sql);
+    
+                                    while ($post = $result->fetch_assoc()) {
+                                        echo '
+                                        <div class="p-3">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                </div>
+                                            </div>
+                                            <p class="break-words">'. nl2br($post['message']) .'</p>';
+                
+                                        if(!empty($post['photo'])) {
+                                            echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
+                                        }
+        
+                                    echo '
                                     </div>
-                                    <div>
-                                        <p class="font-bold">'.$post['username'].'</p>
-                                        <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                    </div>
-                                </div>
-                                <p class="break-words">'. nl2br($post['message']) .'</p>';
-
-                                if(!empty($post['photo'])) {
-                                    echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
+                                    ';
                                 }
+                                }
+                            } else {
+                                $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
+                                                FROM posts
+                                                INNER JOIN users ON (posts.user = users.id) 
+                                                WHERE users.id = '".$_GET['user']."'
+                                                ORDER BY posts.created_at DESC";
+                                $result = $mysqli->query($sql);
+    
+                                while ($post = $result->fetch_assoc()) {
+                                    echo '
+                                    <div class="p-3">
+                                        <div class="flex items-center space-x-3 mb-3">
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                            </div>
+                                        </div>
+                                        <p class="break-words">'. nl2br($post['message']) .'</p>';
+                
+                                        if(!empty($post['photo'])) {
+                                            echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
+                                        }
+        
+                                    echo '
+                                    </div>
+                                    ';
+                                }
+                            }
+                        } else {
+                            if($user['private_account'] == 1) {
 
-                            echo '
-                            </div>
-                            ';
-                        }
+                            } else {
+                                $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
+                                        FROM posts
+                                        INNER JOIN users ON (posts.user = users.id) 
+                                        WHERE users.id = '".$_GET['user']."'
+                                        ORDER BY posts.created_at DESC";
+                                $result = $mysqli->query($sql);
+    
+                                while ($post = $result->fetch_assoc()) {
+                                    echo '
+                                    <div class="p-3">
+                                        <div class="flex items-center space-x-3 mb-3">
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                            </div>
+                                        </div>
+                                        <p class="break-words">'. nl2br($post['message']) .'</p>';
+                
+                                        if(!empty($post['photo'])) {
+                                            echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
+                                        }
+        
+                                    echo '
+                                    </div>
+                                    ';
+                                }
+                            }
+                        } 
                     }
                 }
             }
