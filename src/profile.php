@@ -190,7 +190,40 @@
                                                 if(!empty($post['photo'])) {
                                                     echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                                 }
-                
+
+                                                $sql_check_if_liked = "SELECT * 
+                                                                       FROM liked_posts 
+                                                                       WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                                $result_check_if_liked = $mysqli->query($sql_check_if_liked);
+
+                                                $sql_check_if_liked = "SELECT *
+                                                               FROM liked_posts 
+                                                               WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                                $result_check_if_liked = $mysqli->query($sql_check_if_liked);
+
+                                                $sql_like_count = "SELECT *, COUNT(post) AS number_of_likes
+                                                                FROM liked_posts
+                                                                WHERE post = '".$post['id']."'";
+                                                $result_like_count = $mysqli->query($sql_like_count);
+
+                                                $like_count = $result_like_count->fetch_assoc();
+
+                                                if(mysqli_num_rows($result_check_if_liked) == 1) {
+                                                    echo '
+                                                    <form method="post" action="unlike-post.php">
+                                                        <input type="hidden" name="post" value="'.$post['id'].'">
+                                                        <input type="submit" class="mt-3 font-bold hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                                    </form>
+                                                    '; 
+                                                } else {
+                                                    echo '
+                                                    <form method="post" action="like-post.php">
+                                                        <input type="hidden" name="post" value="'.$post['id'].'">
+                                                        <input type="submit" class="mt-3 hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                                    </form>
+                                                    '; 
+                                                }
+                    
                                             echo '
                                             </div>
                                             ';
@@ -221,7 +254,39 @@
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                         }
-        
+
+                                        $sql_check_if_liked = "SELECT * 
+                                                               FROM liked_posts 
+                                                               WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                        $result_check_if_liked = $mysqli->query($sql_check_if_liked);
+
+                                        $sql_check_if_liked = "SELECT *
+                                                               FROM liked_posts 
+                                                               WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                        $result_check_if_liked = $mysqli->query($sql_check_if_liked);
+
+                                        $sql_like_count = "SELECT *, COUNT(post) AS number_of_likes
+                                                           FROM liked_posts
+                                                           WHERE post = '".$post['id']."'";
+                                        $result_like_count = $mysqli->query($sql_like_count);
+
+                                        $like_count = $result_like_count->fetch_assoc();
+
+                                        if(mysqli_num_rows($result_check_if_liked) == 1) {
+                                            echo '
+                                            <form method="post" action="unlike-post.php">
+                                                <input type="hidden" name="post" value="'.$post['id'].'">
+                                                <input type="submit" class="mt-3 font-bold hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                            </form>
+                                            '; 
+                                        } else {
+                                            echo '
+                                            <form method="post" action="like-post.php">
+                                                <input type="hidden" name="post" value="'.$post['id'].'">
+                                                <input type="submit" class="mt-3 hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                            </form>
+                                            '; 
+                                        }
                                     echo '
                                     </div>
                                     ';
@@ -252,7 +317,35 @@
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                         }
-        
+                                        
+                                        $sql_check_if_liked = "SELECT *
+                                                               FROM liked_posts 
+                                                               WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                        $result_check_if_liked = $mysqli->query($sql_check_if_liked);
+
+                                        $sql_like_count = "SELECT *, COUNT(post) AS number_of_likes
+                                                           FROM liked_posts
+                                                           WHERE post = '".$post['id']."'";
+                                        $result_like_count = $mysqli->query($sql_like_count);
+
+                                        $like_count = $result_like_count->fetch_assoc();
+
+                                        if(mysqli_num_rows($result_check_if_liked) == 1) {
+                                            echo '
+                                            <form method="post" action="unlike-post.php">
+                                                <input type="hidden" name="post" value="'.$post['id'].'">
+                                                <input type="submit" class="mt-3 font-bold hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                            </form>
+                                            '; 
+                                        } else {
+                                            echo '
+                                            <form method="post" action="like-post.php">
+                                                <input type="hidden" name="post" value="'.$post['id'].'">
+                                                <input type="submit" class="mt-3 hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                            </form>
+                                            '; 
+                                        }
+
                                     echo '
                                     </div>
                                     ';
@@ -285,6 +378,15 @@
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                         }
         
+                                        $sql_like_count = "SELECT *, COUNT(post) AS number_of_likes
+                                                           FROM liked_posts
+                                                           WHERE post = '".$post['id']."'";
+                                        $result_like_count = $mysqli->query($sql_like_count);
+
+                                        $like_count = $result_like_count->fetch_assoc();
+
+                                        echo '<p class="mt-3">'.$like_count['number_of_likes'].' Likes</p>';
+
                                     echo '
                                     </div>
                                     ';
