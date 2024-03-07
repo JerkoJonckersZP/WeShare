@@ -2,10 +2,9 @@
     require_once 'components/navbar.php';
 
     if(isset($_GET['user'])) {
-        $sql = "SELECT *, COUNT(posts.message) AS number_of_posts 
-            FROM users 
-            INNER JOIN posts ON (posts.user = users.id)
-            WHERE users.id = '".$_GET['user']."'";
+        $sql = "SELECT * 
+                FROM users 
+                WHERE users.id = '".$_GET['user']."'";
         $result = $mysqli->query($sql);
 
         $user = $result->fetch_assoc();
