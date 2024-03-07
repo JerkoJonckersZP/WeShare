@@ -174,6 +174,29 @@
                                         $result = $mysqli->query($sql);
     
                                         while ($post = $result->fetch_assoc()) {
+                                            $modal_id = 'add_comment_modal_' . $post['id'];
+
+                                            echo "
+                                            <dialog id='$modal_id' class='modal'>
+                                                <div class='modal-box'>
+                                                    <form method='dialog'>
+                                                        <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
+                                                    </form>
+                                                    <h3 class='font-bold text-2xl'>ADD <span class='text-[#1987ff]'>COMMENT</span></h3>
+                                                    <div class='form-control w-full'>
+                                                        <form method='post' action='add-comment.php'>
+                                                            <label class='label'>
+                                                                <span class='label-text'>Ready to share your perspective?</span>
+                                                            </label>
+                                                            <textarea class='textarea textarea-bordered h-28 w-full resize-none mb-1' name='comment' placeholder='Enter your comment' maxlength='240' required></textarea>
+                                                            <input type='hidden' name='post' value='".$post['id']."'>
+                                                            <input type='submit' value='ADD COMMENT' class='btn mt-3 bg-[#f2f2f2] w-full'/>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </dialog>
+                                            ";
+
                                             echo '
                                             <div class="p-3">
                                                 <div class="flex items-center space-x-3 mb-3">
@@ -224,6 +247,8 @@
                                                     '; 
                                                 }
                     
+                                                echo '<p onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>';
+
                                             echo '
                                             </div>
                                             ';
@@ -238,6 +263,29 @@
                                     $result = $mysqli->query($sql);
     
                                     while ($post = $result->fetch_assoc()) {
+                                        $modal_id = 'add_comment_modal_' . $post['id'];
+
+                                        echo "
+                                        <dialog id='$modal_id' class='modal'>
+                                            <div class='modal-box'>
+                                                <form method='dialog'>
+                                                    <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
+                                                </form>
+                                                <h3 class='font-bold text-2xl'>ADD <span class='text-[#1987ff]'>COMMENT</span></h3>
+                                                <div class='form-control w-full'>
+                                                    <form method='post' action='add-comment.php'>
+                                                        <label class='label'>
+                                                            <span class='label-text'>Ready to share your perspective?</span>
+                                                        </label>
+                                                        <textarea class='textarea textarea-bordered h-28 w-full resize-none mb-1' name='comment' placeholder='Enter your comment' maxlength='240' required></textarea>
+                                                        <input type='hidden' name='post' value='".$post['id']."'>
+                                                        <input type='submit' value='ADD COMMENT' class='btn mt-3 bg-[#f2f2f2] w-full'/>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </dialog>
+                                        ";
+
                                         echo '
                                         <div class="p-3">
                                             <div class="flex items-center space-x-3 mb-3">
@@ -287,6 +335,9 @@
                                             </form>
                                             '; 
                                         }
+
+                                        echo '<p onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>';
+
                                     echo '
                                     </div>
                                     ';
@@ -301,6 +352,29 @@
                                 $result = $mysqli->query($sql);
     
                                 while ($post = $result->fetch_assoc()) {
+                                    $modal_id = 'add_comment_modal_' . $post['id'];
+
+                                    echo "
+                                    <dialog id='$modal_id' class='modal'>
+                                        <div class='modal-box'>
+                                            <form method='dialog'>
+                                                <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
+                                            </form>
+                                            <h3 class='font-bold text-2xl'>ADD <span class='text-[#1987ff]'>COMMENT</span></h3>
+                                            <div class='form-control w-full'>
+                                                <form method='post' action='add-comment.php'>
+                                                    <label class='label'>
+                                                        <span class='label-text'>Ready to share your perspective?</span>
+                                                    </label>
+                                                    <textarea class='textarea textarea-bordered h-28 w-full resize-none mb-1' name='comment' placeholder='Enter your comment' maxlength='240' required></textarea>
+                                                    <input type='hidden' name='post' value='".$post['id']."'>
+                                                    <input type='submit' value='ADD COMMENT' class='btn mt-3 bg-[#f2f2f2] w-full'/>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dialog>
+                                    ";
+
                                     echo '
                                     <div class="p-3">
                                         <div class="flex items-center space-x-3 mb-3">
@@ -345,6 +419,8 @@
                                             </form>
                                             '; 
                                         }
+
+                                        echo '<p onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>';
 
                                     echo '
                                     </div>
