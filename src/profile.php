@@ -212,12 +212,12 @@
                                                 <div class="mask mask-squircle w-12 h-12 rounded-full">
                                                     <img src="../public/images/'. $post['profile_picture'] .'"/>
                                                 </div>
-                                                <div>
-                                                    <p class="font-bold">'.$post['username'].'</p>
-                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                                </div>
+                                            <div>
+                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                             </div>
-                                            <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                        </div>
+                                        <p class="break-words">'. nl2br($post['message']) .'</p>';
                 
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -260,9 +260,7 @@
                                 }
                             }
                         } else {
-                            if($user['private_account'] == 1) {
-
-                            } else {
+                            if(!($user['private_account'] == 1)) {
                                 $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                         FROM posts
                                         INNER JOIN users ON (posts.user = users.id) 
@@ -283,7 +281,7 @@
                                             </div>
                                         </div>
                                         <p class="break-words">'. nl2br($post['message']) .'</p>';
-                
+        
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                         }
@@ -293,7 +291,7 @@
                                     ';
                                 }
                             }
-                        } 
+                        }  
                     }
                 }
             }
