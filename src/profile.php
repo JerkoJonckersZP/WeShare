@@ -231,6 +231,11 @@
 
                                                 $like_count = $result_like_count->fetch_assoc();
 
+                                                echo '
+                                                <div class="flex w-full">
+                                                    <div class="w-1/2 text-center">
+                                                ';
+
                                                 if(mysqli_num_rows($result_check_if_liked) == 1) {
                                                     echo '
                                                     <form method="post" action="unlike-post.php">
@@ -247,7 +252,12 @@
                                                     '; 
                                                 }
                     
-                                                echo '<p onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>';
+                                                echo '
+                                                    </div>
+                                                    <div class="w-1/2 text-center">
+                                                        <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                                    </div>
+                                                ';
 
                                             echo '
                                             </div>
@@ -320,6 +330,11 @@
 
                                         $like_count = $result_like_count->fetch_assoc();
 
+                                        echo '
+                                        <div class="flex w-full">
+                                            <div class="w-1/2 text-center">
+                                        ';
+
                                         if(mysqli_num_rows($result_check_if_liked) == 1) {
                                             echo '
                                             <form method="post" action="unlike-post.php">
@@ -336,7 +351,12 @@
                                             '; 
                                         }
 
-                                        echo '<p onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>';
+                                        echo '
+                                            </div>
+                                            <div class="w-1/2 text-center">
+                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                            </div>
+                                        ';
 
                                     echo '
                                     </div>
@@ -345,10 +365,10 @@
                                 }
                             } else {
                                 $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
-                                                FROM posts
-                                                INNER JOIN users ON (posts.user = users.id) 
-                                                WHERE users.id = '".$_GET['user']."'
-                                                ORDER BY posts.created_at DESC";
+                                        FROM posts
+                                        INNER JOIN users ON (posts.user = users.id) 
+                                        WHERE users.id = '".$_GET['user']."'
+                                        ORDER BY posts.created_at DESC";
                                 $result = $mysqli->query($sql);
     
                                 while ($post = $result->fetch_assoc()) {
@@ -404,6 +424,11 @@
 
                                         $like_count = $result_like_count->fetch_assoc();
 
+                                        echo '
+                                        <div class="flex w-full">
+                                            <div class="w-1/2 text-center">
+                                        ';
+
                                         if(mysqli_num_rows($result_check_if_liked) == 1) {
                                             echo '
                                             <form method="post" action="unlike-post.php">
@@ -420,9 +445,15 @@
                                             '; 
                                         }
 
-                                        echo '<p onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>';
+                                        echo '
+                                            </div>
+                                            <div class="w-1/2 text-center">
+                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                            </div>
+                                        ';
 
                                     echo '
+                                        </div>
                                     </div>
                                     ';
                                 }
