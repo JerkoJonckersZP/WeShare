@@ -507,6 +507,77 @@
         </div>
         <!-- Rechts -->
         <div class="w-1/4">
+            <div class="p-3">
+            <?php
+                if(isset($_SESSION['userid'])) {
+                    $sql = "SELECT * 
+                            FROM friends 
+                            WHERE user_one = '".$_SESSION['userid']."' OR user_two = '".$_SESSION['userid']."'";
+                    $result = $mysqli->query($sql);
+
+                    echo '
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    ';
+
+                    if(mysqli_num_rows($result) > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            if ($row['user_one'] == $_SESSION['userid']) {
+                                $friendid = $row['user_two'];
+                            } else {
+                                $friendid = $row['user_one'];
+                            }
+
+                            $sql_friend_information = "SELECT users.profile_picture, users.username 
+                                                        FROM users 
+                                                        WHERE id = '".$friendid."'";
+                            $result_friend_information = $mysqli->query($sql_friend_information);
+
+                            $friend_information = $result_friend_information->fetch_assoc();
+
+                            echo '
+                            <tr>
+                                <td>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="avatar">
+                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                            <img src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
+                                        </div>
+                                        </div>
+                                        <div>
+                                        <a href="profile.php?user='.$friendid.'">
+                                            <div class="font-bold">'.$friend_information['username'].'</div>
+                                        </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <th class="text-center">
+                                    <a href="#"><button class="btn btn-ghost btn-xs">chat</button></a>
+                                </th>
+                            </tr>
+                            ';
+                        }
+                    } else {
+                        echo "
+                        <tr>
+                            <td>You've not added any friends yet.</td>
+                        </tr>
+                        ";
+                    
+                    echo '
+                        </tbody>
+                    </table>
+                    ';
+                    }
+                }
+            ?>
+            </div>
         </div>
     </div>
 </body>
