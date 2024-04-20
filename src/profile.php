@@ -42,7 +42,6 @@
                         <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
                         <p class='text-center'>It looks like the user page you're trying to access doesn't exist.<br>No worries, though! Try searching for another user.<br>Happy navigating!</p>
                     </div>
-                </div>
                 ";
             } else {
                 if(isset($_GET['user'])) {
@@ -58,7 +57,6 @@
                                 <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
                                 <p class='text-center'>It looks like the user page you're trying to access doesn't exist.<br>No worries, though! Try searching for another user.<br>Happy navigating!</p>
                             </div>
-                        </div>
                         ";
                     } else {
                         echo '
@@ -359,7 +357,7 @@
                                         ';
 
                                     echo '
-                                        </div>
+                                    </div>
                                     </div>
                                     ';
                                 }
