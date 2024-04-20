@@ -255,7 +255,7 @@
                                                 echo '
                                                     </div>
                                                     <div class="w-1/2 text-center">
-                                                        <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                                        <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comments</p>
                                                     </div>
                                                 ';
 
@@ -354,7 +354,7 @@
                                         echo '
                                             </div>
                                             <div class="w-1/2 text-center">
-                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comments</p>
                                             </div>
                                         ';
 
@@ -448,7 +448,7 @@
                                         echo '
                                             </div>
                                             <div class="w-1/2 text-center">
-                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comments</p>
                                             </div>
                                         ';
 
@@ -492,7 +492,16 @@
 
                                         $like_count = $result_like_count->fetch_assoc();
 
-                                        echo '<p class="mt-3">'.$like_count['number_of_likes'].' Likes</p>';
+                                        echo '
+                                        <div class="flex w-full">
+                                            <div class="w-1/2 text-center">
+                                                <p class="mt-3">'.$like_count['number_of_likes'].' Likes</p>
+                                            </div>
+                                            <div class="w-1/2 text-center">
+                                                <p class="mt-3">Comments</p>
+                                            </div>
+                                        </div>
+                                        ';
 
                                     echo '
                                     </div>
