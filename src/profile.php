@@ -557,7 +557,7 @@
                                     </div>
                                 </td>
                                 <th class="text-center">
-                                    <a href="#"><button class="btn btn-ghost btn-xs">chat</button></a>
+                                    <a href="chat.php?sender='.$_SESSION['userid'].'&receiver='.$friendid.'"><button class="btn btn-ghost btn-xs">chat</button></a>
                                 </th>
                             </tr>
                             ';
