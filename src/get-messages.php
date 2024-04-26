@@ -2,7 +2,9 @@
     session_start();
     require_once 'database/config.php';
 
-    $receiverid = $_GET['receiver'] ?? null;
+    if($_GET['receiver'] != null) {
+        $receiverid = $_GET['receiver'];
+    }
 
     // Haal alle berichten op tussen de huidige gebruiker en de geselecteerde ontvanger
     function getMessages($mysqli, $sender, $receiver) {

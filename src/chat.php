@@ -1,13 +1,6 @@
 <?php
     require_once 'components/navbar.php';
 
-    // Controleer of de gebruiker is ingelogd, anders doorsturen naar de inlogpagina
-    if (!isset($_SESSION['userid'])) {
-        header("Location: login.php");
-        exit;
-    }
-
-    // Als de POST request wordt gemaakt, voeg dan het bericht toe aan de database
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['message']) && isset($_POST['receiver'])) {
             $message = $_POST['message'];
@@ -19,27 +12,80 @@
             
         }
     }
-
-    $receiverid = $_GET['receiver'] ?? null;
 ?>
 <html>
 <body>
     <div class="flex max-w-7xl mx-auto items-start">
         <div class="w-1/4">
         </div>
-        <div class="w-2/4">
-            <div class="p-3">
-                <div id="chat-messages" class="max-h-[750px] overflow-y-auto"></div>
-                <form id="chat-form">
-                    <input type="text" id="message" placeholder="Type here" class="input input-bordered w-full"/>
-                    <input type="hidden" id="receiver" name="receiver" value="<?= $receiverid ?>">
-                </form>
+        <?php
+            if(isset($_SESSION['userid'])) {
+                if(isset($_GET['receiver']) AND isset($_GET['sender'])) {
+                    if($_SESSION['userid'] == $_GET['sender']) {
+                        $sql = "SELECT * 
+                                FROM friends 
+                                WHERE (user_one = '".$_SESSION['userid']."' AND user_two = '".$_GET['receiver']."') OR (user_one = '".$_GET['receiver']."' AND user_two = '".$_SESSION['userid']."')";
+                        $result = $mysqli->query($sql);
+
+                        if(mysqli_num_rows($result) > 0) {
+                            echo '
+                            <div class="w-2/4">
+                                <div class="p-3">
+                                    <div id="chat-messages" class="max-h-[750px] overflow-y-auto"></div>
+                                    <form id="chat-form">
+                                        <input type="text" id="message" placeholder="Type here" class="input input-bordered w-full"/>
+                                        <input type="hidden" id="receiver" name="receiver" value="'.$_GET['receiver'].'">
+                                    </form>
+                                </div>
+                            </div>
+                            ';
+                        } else {
+                            echo "
+                            <div class='w-2/4'>
+                                <div class='p-3'>
+                                    <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
+                                    <p class='text-center'>It seems we're not connected as friends yet, so chatting isn't enabled.<br>Feel free to send a friend request if you'd like to chat.<br>Thanks for your understanding!</p>
+                                </div>
+                            </div>
+                            ";
+                        }
+                    } else {
+                        echo "
+                        <div class='w-2/4'>
+                            <div class='p-3'>
+                                <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
+                                <p class='text-center'>This chat page isn't linked to your account, so chatting isn't possible.<br>Please check your account or try the correct page.<br>Thanks!</p>
+                            </div>
+                        </div>
+                        ";
+                    }
+                } else {
+                    echo "
+                    <div class='w-2/4'>
+                        <div class='p-3'>
+                            <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
+                            <p class='text-center'> It appears that the necessary parameters haven't been filled in correctly, so chatting isn't available at the moment. Please try again with the correct information.<br>Thank you!</p>
+                        </div>
+                    </div>
+                    ";
+                }
+            } else {
+                echo "
+                <div class='w-2/4'>
+                    <div class='p-3'>
+                        <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
+                        <p class='text-center'>It seems like you're not logged in, so chatting isn't available at the moment.<br>Please log in to start chatting. <br>Thank you!</p>
+                    </div>
                 </div>
-        </div>
+                ";
+            }
+        ?>
         <div class="w-1/4">
         </div>
     </div>
-    <script>
+</body>
+</html>
+<script>
     let isAutoScrollEnabled = true; // Variabeel om automatisch scrollen in/uit te schakelen
 
     // Deze functie haalt de berichten op tussen de huidige gebruiker en de geselecteerde ontvanger
@@ -122,6 +168,3 @@
         isAutoScrollEnabled = (this.scrollHeight - this.scrollTop === this.clientHeight);
     });
 </script>
-
-</body>
-</html>

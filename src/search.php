@@ -38,7 +38,7 @@
             echo "
             <div class='w-2/4'>
                 <div class='p-3'>
-                    <h1 class='text-5xl font-bold mb-3 text-center'>Uh-oh!</h1>
+                    <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
                     <p class='text-center'>It seems that there are no results for the search query you entered.<br>Don't worry, though! Try using a different search query.<br>Happy searching!</p>
                 </div>
             </div>";
