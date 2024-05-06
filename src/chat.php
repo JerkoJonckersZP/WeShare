@@ -6,10 +6,12 @@
             $message = $_POST['message'];
             $receiver = $_POST['receiver'];
 
-            $sql = "INSERT INTO messages (sender, receiver, message) 
-                    VALUES ('".$_SESSION['userid']."', '".$receiver."', '".$message."')";
-            $result = $mysqli->query($sql);
-            
+            // Voorbereiden van de SQL-query met prepared statement
+            $sql = "INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("iis", $_SESSION['userid'], $receiver, $message);
+            $stmt->execute();
+            $stmt->close();
         }
     }
 ?>
@@ -41,8 +43,11 @@
                     if($_SESSION['userid'] == $_GET['sender']) {
                         $sql = "SELECT * 
                                 FROM friends 
-                                WHERE (user_one = '".$_SESSION['userid']."' AND user_two = '".$_GET['receiver']."') OR (user_one = '".$_GET['receiver']."' AND user_two = '".$_SESSION['userid']."')";
-                        $result = $mysqli->query($sql);
+                                WHERE (user_one = ? AND user_two = ?) OR (user_one = ? AND user_two = ?)";
+                        $stmt = $mysqli->prepare($sql);
+                        $stmt->bind_param("iiii", $_SESSION['userid'], $_GET['receiver'], $_GET['receiver'], $_SESSION['userid']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
                         if(mysqli_num_rows($result) > 0) {
                             echo '
@@ -103,8 +108,11 @@
                 if(isset($_SESSION['userid'])) {
                     $sql = "SELECT * 
                         FROM friends 
-                            WHERE user_one = '".$_SESSION['userid']."' OR user_two = '".$_SESSION['userid']."'";
-                    $result = $mysqli->query($sql);
+                            WHERE user_one = ? OR user_two = ?";
+                    $stmt = $mysqli->prepare($sql);
+                    $stmt->bind_param("ii", $_SESSION['userid'], $_SESSION['userid']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
                     echo '
                     <table class="table">
@@ -127,9 +135,11 @@
 
                             $sql_friend_information = "SELECT users.profile_picture, users.username 
                                                         FROM users 
-                                                        WHERE id = '".$friendid."'";
-                            $result_friend_information = $mysqli->query($sql_friend_information);
-
+                                                        WHERE id = ?";
+                            $stmt_friend_information = $mysqli->prepare($sql_friend_information);
+                            $stmt_friend_information->bind_param("i", $friendid);
+                            $stmt_friend_information->execute();
+                            $result_friend_information = $stmt_friend_information->get_result();
                             $friend_information = $result_friend_information->fetch_assoc();
 
                             echo '

@@ -5,7 +5,7 @@
     if(isset($_SESSION['userid'])) {
         if(isset($_POST['post'])) {
             $sql = "INSERT INTO comments (user, post, comment) 
-                    VALUES ('".$_SESSION['userid']."','".$_POST['post']."','".$_POST['comment']."')";
+                    VALUES ('".$_SESSION['userid']."','".mysqli_real_escape_string($mysqli, $_POST['post'])."','".mysqli_real_escape_string($mysqli, $_POST['comment'])."')";
             $result = $mysqli->query($sql);
 
             if(isset($_SERVER['HTTP_REFERER'])) {

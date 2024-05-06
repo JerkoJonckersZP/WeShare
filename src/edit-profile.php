@@ -2,8 +2,8 @@
     require_once 'database/config.php';
     session_start();
 
-    $username = $_POST['username'];
-    $description = trim($_POST['description']);
+    $username = mysqli_real_escape_string($mysqli, $_POST['username']);
+    $description = trim(mysqli_real_escape_string($mysqli, $_POST['description']));
 
     if($_POST['private-account'] == "on") {
         $private_account = 1;
@@ -11,7 +11,7 @@
         $private_account = 0;
     }
 
-    $profile_picture = $_FILES['profile-picture']['name'];
+    $profile_picture = mysqli_real_escape_string($mysqli, $_FILES['profile-picture']['name']);
     $profile_picture_temporary = $_FILES['profile-picture']['tmp_name'];
     $upload_directory = $_SERVER['DOCUMENT_ROOT'] . '/weshare/public/images/';
 
@@ -43,7 +43,7 @@
             }
         }
     }
-    
+
     if(isset($_SERVER['HTTP_REFERER'])) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     } else {

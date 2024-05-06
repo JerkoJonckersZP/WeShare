@@ -24,6 +24,140 @@
             </div>
         </div>
         <div class="w-2/4">
+            <?php
+                if(isset($_SESSION['userid'])) {
+                    $sql = "SELECT * 
+                            FROM friends 
+                            WHERE user_one = ".$_SESSION['userid']." OR user_two = ".$_SESSION['userid']."";
+                    $result = $mysqli->query($sql);
+
+                    if(mysqli_num_rows($result) > 0) {
+                        $sql = "SELECT posts.*, users.profile_picture, users.username
+                                FROM posts
+                                JOIN users ON posts.user = users.id
+                                WHERE posts.user = ".$_SESSION['userid']."
+                                OR posts.user IN (
+                                    SELECT user_two
+                                    FROM friends
+                                    WHERE user_one = ".$_SESSION['userid']."
+                                )
+                                OR posts.user IN (
+                                    SELECT user_one
+                                    FROM friends
+                                    WHERE user_two = ".$_SESSION['userid']."
+                                )
+                                ORDER BY posts.created_at DESC";
+                        $result = $mysqli->query($sql);
+
+                        while ($post = $result->fetch_assoc()) {
+                            $modal_id = 'add_comment_modal_' . $post['id'];
+
+                            echo "
+                            <dialog id='$modal_id' class='modal'>
+                                <div class='modal-box'>
+                                    <form method='dialog'>
+                                        <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
+                                    </form>
+                                    <h3 class='font-bold text-2xl'>ADD <span class='text-[#1987ff]'>COMMENT</span></h3>
+                                    <div class='form-control w-full'>
+                                        <form method='post' action='add-comment.php'>
+                                            <label class='label'>
+                                                <span class='label-text'>Ready to share your perspective?</span>
+                                            </label>
+                                            <textarea class='textarea textarea-bordered h-28 w-full resize-none mb-1' name='comment' placeholder='Enter your comment' maxlength='240' required></textarea>
+                                            <input type='hidden' name='post' value='".$post['id']."'>
+                                            <input type='submit' value='ADD COMMENT' class='btn mt-3 bg-[#f2f2f2] w-full'/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </dialog>
+                            ";
+
+                            echo '
+                            <div class="p-3">
+                                <div class="flex items-center space-x-3 mb-3">
+                                <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                </div>
+                                <div>
+                                    <p class="font-bold">'.$post['username'].'</p>
+                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                </div>
+                                </div>
+                                <p class="break-words">'. nl2br($post['message']) .'</p>';
+                
+                                if(!empty($post['photo'])) {
+                                    echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
+                                }
+
+                                $sql_check_if_liked = "SELECT * 
+                                                       FROM liked_posts 
+                                                       WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                $result_check_if_liked = $mysqli->query($sql_check_if_liked);
+
+                                $sql_check_if_liked = "SELECT *
+                                                       FROM liked_posts 
+                                                       WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                $result_check_if_liked = $mysqli->query($sql_check_if_liked);
+
+                                $sql_like_count = "SELECT *, COUNT(post) AS number_of_likes
+                                                   FROM liked_posts
+                                                   WHERE post = '".$post['id']."'";
+                                $result_like_count = $mysqli->query($sql_like_count);
+
+                                $like_count = $result_like_count->fetch_assoc();
+
+                                echo '
+                                <div class="flex w-full">
+                                    <div class="w-1/2 text-center">
+                                ';            
+
+                                if(mysqli_num_rows($result_check_if_liked) == 1) {
+                                    echo '
+                                    <form method="post" action="unlike-post.php">
+                                        <input type="hidden" name="post" value="'.$post['id'].'">
+                                        <input type="submit" class="mt-3 font-bold hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                    </form>
+                                    '; 
+                                } else {
+                                    echo '
+                                    <form method="post" action="like-post.php">
+                                        <input type="hidden" name="post" value="'.$post['id'].'">
+                                        <input type="submit" class="mt-3 hover:cursor-pointer" value="'.$like_count['number_of_likes'].' Likes">
+                                    </form>
+                                    '; 
+                                }
+
+                                echo '
+                                </div>
+                                    <div class="w-1/2 text-center">
+                                        <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                    </div>
+                                ';
+
+                            echo '
+                                </div>
+                            </div>
+                            ';
+                        }
+                    } else {
+                        echo "
+                        <div class='p-3'>
+                        <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
+                        <p class='text-center'>You've not added any friends yet, so there are no posts to view.<br>Consider adding friends to see their posts.<br>Thanks!</p>
+                        </div>
+                        ";
+                    }
+
+                } else {
+                    echo "
+                    <div class='p-3'>
+                        <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
+                        <p class='text-center'>It seems like you're not logged in, so you can't view any posts at the moment.<br>Please log in to access the content.<br>Thank you!</p>
+                    </div>
+                    ";
+                }
+            ?>
         </div>
         <div class="w-1/4">
             <div class="p-3">
