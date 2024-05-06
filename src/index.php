@@ -141,12 +141,7 @@
                             ';
                         }
                     } else {
-                        echo "
-                        <div class='p-3'>
-                        <h1 class='text-5xl font-bold mb-3 text-center'>Oops!</h1>
-                        <p class='text-center'>You've not added any friends yet, so there are no posts to view.<br>Consider adding friends to see their posts.<br>Thanks!</p>
-                        </div>
-                        ";
+                        // Hier moet je dan de checken of de persoon zelf posts heeft. Indien dat zo is laat deze zien anders foutberichtje.
                     }
 
                 } else {
