@@ -49,6 +49,8 @@
                                 ORDER BY posts.created_at DESC";
                         $result = $mysqli->query($sql);
 
+                        // Hier nog even controleren of er minstens 1 bericht is van een vriend. Anders even een foutmelding
+
                         while ($post = $result->fetch_assoc()) {
                             $modal_id = 'add_comment_modal_' . $post['id'];
 
@@ -143,7 +145,6 @@
                     } else {
                         // Hier moet je dan de checken of de persoon zelf posts heeft. Indien dat zo is laat deze zien anders foutberichtje.
                     }
-
                 } else {
                     echo "
                     <div class='p-3'>
