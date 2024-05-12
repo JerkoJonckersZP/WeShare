@@ -32,7 +32,7 @@
                     $result = $mysqli->query($sql);
 
                     if(mysqli_num_rows($result) > 0) {
-                        $sql = "SELECT posts.*, users.profile_picture, users.username
+                        $sql = "SELECT posts.id, posts.message, posts.photo, posts.created_at, posts.user, users.profile_picture, users.username
                                 FROM posts
                                 JOIN users ON posts.user = users.id
                                 WHERE posts.user = ".$_SESSION['userid']."
@@ -76,34 +76,36 @@
 
                                 echo '
                                 <div class="p-3">
-                                    <div class="flex items-center space-x-3 mb-3">
-                                    <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                        <img src="../public/images/'. $post['profile_picture'] .'"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold">'.$post['username'].'</p>
-                                        <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                    </div>
-                                    </div>
-                                    <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                    <a href="post.php?post='.$post['id'].'">
+                                        <div class="flex items-center space-x-3 mb-3">
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                            </div>
+                                        </div>
+                                        <p class="break-words">'. nl2br($post['message']) .'</p>
+                                    </a>';
                     
                                     if(!empty($post['photo'])) {
                                         echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                     }
 
                                     $sql_check_if_liked = "SELECT * 
-                                                        FROM liked_posts 
-                                                        WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                                           FROM liked_posts 
+                                                           WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
                                     $result_check_if_liked = $mysqli->query($sql_check_if_liked);
 
                                     $sql_check_if_liked = "SELECT *
-                                                        FROM liked_posts 
-                                                        WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                                           FROM liked_posts 
+                                                           WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
                                     $result_check_if_liked = $mysqli->query($sql_check_if_liked);
 
                                     $sql_like_count = "SELECT *, COUNT(post) AS number_of_likes
-                                                    FROM liked_posts
-                                                    WHERE post = '".$post['id']."'";
+                                                       FROM liked_posts
+                                                       WHERE post = '".$post['id']."'";
                                     $result_like_count = $mysqli->query($sql_like_count);
 
                                     $like_count = $result_like_count->fetch_assoc();
@@ -142,7 +144,7 @@
                                 ';
                             }
                         } else {
-                            $sql = "SELECT *, users.username, users.profile_picture
+                            $sql = "SELECT posts.id, posts.user, posts.message. posts.photo, posts.created_at, users.username, users.profile_picture
                                     FROM posts 
                                     INNER JOIN users ON (posts.user = users.id)
                                     WHERE user = ".$_SESSION['userid']."
@@ -176,34 +178,36 @@
 
                                     echo '
                                     <div class="p-3">
-                                        <div class="flex items-center space-x-3 mb-3">
-                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img src="../public/images/'. $post['profile_picture'] .'"/>
-                                        </div>
-                                        <div>
-                                            <p class="font-bold">'.$post['username'].'</p>
-                                            <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                        </div>
-                                        </div>
-                                        <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                        <a href="post.php?post='.$post['id'].'">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                </div>
+                                            </div>
+                                            <p class="break-words">'. nl2br($post['message']) .'</p>
+                                        </a>';
                         
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                         }
 
                                         $sql_check_if_liked = "SELECT * 
-                                                            FROM liked_posts 
-                                                            WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                                               FROM liked_posts 
+                                                               WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
                                         $result_check_if_liked = $mysqli->query($sql_check_if_liked);
 
                                         $sql_check_if_liked = "SELECT *
-                                                            FROM liked_posts 
-                                                            WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
+                                                               FROM liked_posts 
+                                                               WHERE user = '".$_SESSION['userid']."' AND post = '".$post['id']."'";
                                         $result_check_if_liked = $mysqli->query($sql_check_if_liked);
 
                                         $sql_like_count = "SELECT *, COUNT(post) AS number_of_likes
-                                                        FROM liked_posts
-                                                        WHERE post = '".$post['id']."'";
+                                                           FROM liked_posts
+                                                           WHERE post = '".$post['id']."'";
                                         $result_like_count = $mysqli->query($sql_like_count);
 
                                         $like_count = $result_like_count->fetch_assoc();
@@ -251,7 +255,7 @@
                             }
                         }
                     } else {
-                        $sql = "SELECT *, users.username, users.profile_picture
+                        $sql = "SELECT posts.id, posts.user, posts.message, posts.photo, posts.created_at, users.username, users.profile_picture
                                 FROM posts 
                                 INNER JOIN users ON (posts.user = users.id)
                                 WHERE user = ".$_SESSION['userid']."
@@ -285,16 +289,18 @@
 
                                 echo '
                                 <div class="p-3">
-                                    <div class="flex items-center space-x-3 mb-3">
-                                    <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                        <img src="../public/images/'. $post['profile_picture'] .'"/>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold">'.$post['username'].'</p>
-                                        <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                    </div>
-                                    </div>
-                                    <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                    <a href="post.php?post='.$post['id'].'">
+                                        <div class="flex items-center space-x-3 mb-3">
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                            </div>
+                                        </div>
+                                        <p class="break-words">'. nl2br($post['message']) .'</p>
+                                    </a>';
                     
                                     if(!empty($post['photo'])) {
                                         echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
