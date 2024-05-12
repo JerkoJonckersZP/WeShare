@@ -197,16 +197,18 @@
 
                                             echo '
                                             <div class="p-3">
-                                                <div class="flex items-center space-x-3 mb-3">
-                                                    <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                        <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                <a href="post.php?post='.$post['id'].'">
+                                                    <div class="flex items-center space-x-3 mb-3">
+                                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                            <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                        </div>
+                                                        <div>
+                                                            <p class="font-bold">'.$post['username'].'</p>
+                                                            <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <p class="font-bold">'.$post['username'].'</p>
-                                                        <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                                    </div>
-                                                </div>
-                                                <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                                    <p class="break-words">'. nl2br($post['message']) .'</p>
+                                                </a>';
                 
                                                 if(!empty($post['photo'])) {
                                                     echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -297,16 +299,18 @@
 
                                         echo '
                                         <div class="p-3">
-                                            <div class="flex items-center space-x-3 mb-3">
-                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                            <a href="post.php?post='.$post['id'].'">
+                                                <div class="flex items-center space-x-3 mb-3">
+                                                    <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                        <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-bold">'.$post['username'].'</p>
+                                                        <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                    </div>
                                                 </div>
-                                            <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
-                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                            </div>
-                                        </div>
-                                        <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                                <p class="break-words">'. nl2br($post['message']) .'</p>
+                                            </a>';
                 
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -397,16 +401,18 @@
 
                                     echo '
                                     <div class="p-3">
-                                        <div class="flex items-center space-x-3 mb-3">
-                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                        <a href="post.php?post='.$post['id'].'">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
-                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                            </div>
-                                        </div>
-                                        <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                            <p class="break-words">'. nl2br($post['message']) .'</p>
+                                        </a>';
                 
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -470,16 +476,18 @@
                                 while ($post = $result->fetch_assoc()) {
                                     echo '
                                     <div class="p-3">
-                                        <div class="flex items-center space-x-3 mb-3">
-                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                        <a href="post.php?post='.$post['id'].'">
+                                            <div class="flex items-center space-x-3 mb-3">
+                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
-                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                            </div>
-                                        </div>
-                                        <p class="break-words">'. nl2br($post['message']) .'</p>';
+                                            <p class="break-words">'. nl2br($post['message']) .'</p>
+                                        </a>';
         
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -492,7 +500,7 @@
 
                                         $like_count = $result_like_count->fetch_assoc();
 
-                                        echo '<p class="mt-3">'.$like_count['number_of_likes'].' Likes</p>';
+                                        echo '<p class="mt-3 w-full text-center">'.$like_count['number_of_likes'].' Likes</p>';
 
                                     echo '
                                     </div>
