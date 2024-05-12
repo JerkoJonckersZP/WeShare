@@ -44,6 +44,13 @@
 
                     $user = $result->fetch_assoc();
 
+                    $sql_friend_request_count = "SELECT COUNT(id) AS count
+                                                 FROM friend_requests 
+                                                 WHERE receiver = ".$_SESSION['userid']."";
+                    $result_friend_request_count = $mysqli->query($sql_friend_request_count);
+
+                    $friend_request = $result_friend_request_count->fetch_assoc();
+
                     echo '
                     <a href="index.php" class="btn btn-ghost btn-circle">
                     <div class="indicator flex items-center">
@@ -51,15 +58,57 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                         </svg>
                     </div>
-                    </a>
-                    <button class="btn btn-ghost btn-circle">
-                        <div class="indicator">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                            <span class="badge badge-xs badge-primary indicator-item bg-[#1987ff] border-[#1987ff]"></span>
+                    </a>';                    
+                            
+                    if($friend_request['count'] > 0) {
+                        echo '
+                        <div class="dropdown dropdown-end">
+                            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                                <button class="btn btn-ghost btn-circle">
+                                <div class="indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                                    </svg>
+                                    <span class="text-white badge badge-xs badge-primary indicator-item bg-[#1987ff] border-[#1987ff]">'.$friend_request['count'].'</span>
+                                </div>
+                                </button>
+                            </label>
+                            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-80">
+                            ';
+
+                        $sql_friend_requests = "SELECT *, users.username, users.profile_picture 
+                                                FROM friend_requests 
+                                                INNER JOIN users ON (users.id = friend_requests.requestor)
+                                                WHERE receiver = ".$_SESSION['userid']."
+                                                ORDER BY requested_at DESC";
+                        $result_friend_requests = $mysqli->query($sql_friend_requests);
+                        
+                        while ($friend_request_information = $result_friend_requests->fetch_assoc()) {
+                            echo '
+                                <li>
+                                    <a href="profile.php?user='.$friend_request_information['requestor'].'">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="avatar">
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img src="../public/images/'.$friend_request_information['profile_picture'].'"/>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p><span class="font-bold">'.$friend_request_information['username'].'</span> has sent you a friend request.</p>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </li>
+                            ';
+                        }
+
+                        echo '
+                            </ul>
                         </div>
-                    </button>
+                        ';
+                    }
+                    
+                    echo '
                     <button class="btn btn-ghost btn-circle">
                         <div class="indicator">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
