@@ -144,10 +144,10 @@
                                 ';
                             }
                         } else {
-                            $sql = "SELECT posts.id, posts.user, posts.message. posts.photo, posts.created_at, users.username, users.profile_picture
+                            $sql = "SELECT posts.id, posts.user, posts.message, posts.photo, posts.created_at, users.username, users.profile_picture
                                     FROM posts 
                                     INNER JOIN users ON (posts.user = users.id)
-                                    WHERE user = ".$_SESSION['userid']."
+                                    WHERE posts.user = ".$_SESSION['userid']."
                                     ORDER BY posts.created_at DESC";
                             $result = $mysqli->query($sql);
                             
