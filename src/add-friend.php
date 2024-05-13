@@ -3,19 +3,22 @@
     session_start();
 
     if(isset($_SESSION['userid'])) {
-        if(isset($_POST['requestor']) AND isset($_POST['receiver'])) {
+        if(isset($_POST['requestor'], $_POST['receiver'])) {
             $requestor = $_POST['requestor'];
             $receiver = $_POST['receiver'];
-    
-            $sql = "SELECT * 
-                    FROM friends 
-                    WHERE user_one = ".$requestor." AND user_two = ".$receiver." OR user_one = ".$receiver." AND user_two = ".$requestor."";
-            $result = $mysqli->query($sql);
-    
-            if(mysqli_num_rows($result) == 0) {
-                $sql = "INSERT INTO friend_requests (requestor, receiver) 
-                        VALUES ('".$requestor."','".$receiver."')";
-                $result = $mysqli->query($sql);
+
+            $sql_check_friends = "SELECT * FROM friends WHERE (user_one = ? AND user_two = ?) OR (user_one = ? AND user_two = ?)";
+            $stmt_check_friends = $mysqli->prepare($sql_check_friends);
+            $stmt_check_friends->bind_param("iiii", $requestor, $receiver, $receiver, $requestor);
+            $stmt_check_friends->execute();
+            $result_check_friends = $stmt_check_friends->get_result();
+
+            if($result_check_friends->num_rows == 0) {
+                $sql_insert_request = "INSERT INTO friend_requests (requestor, receiver) VALUES (?, ?)";
+                $stmt_insert_request = $mysqli->prepare($sql_insert_request);
+                $stmt_insert_request->bind_param("ii", $requestor, $receiver);
+                $stmt_insert_request->execute();
+                $stmt_insert_request->close();
 
                 if(isset($_SERVER['HTTP_REFERER'])) {
                     header('Location: ' . $_SERVER['HTTP_REFERER']);

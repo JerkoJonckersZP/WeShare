@@ -29,12 +29,15 @@
     }
 
     if(!(empty($query))) {
-        $sql = "SELECT * 
-            FROM users 
-            WHERE username LIKE '%".$query."%'";
-        $result = $mysqli->query($sql);
+        // Voorbereiden van de statement om gebruikers te zoeken op basis van de zoekopdracht
+        $sql_search_users = "SELECT * FROM users WHERE username LIKE ?";
+        $stmt_search_users = $mysqli->prepare($sql_search_users);
+        $search_query = "%$query%";
+        $stmt_search_users->bind_param("s", $search_query);
+        $stmt_search_users->execute();
+        $result_search_users = $stmt_search_users->get_result();
 
-        if(mysqli_num_rows($result) == 0) {
+        if($result_search_users->num_rows == 0) {
             echo "
             <div class='w-2/4'>
                 <div class='p-3'>
@@ -56,7 +59,7 @@
                     <tbody>
             ';
 
-            while ($row = $result->fetch_assoc()) {
+            while ($row = $result_search_users->fetch_assoc()) {
                 echo '
                     <tr>
                         <td>
@@ -101,10 +104,12 @@
     ";
 
     if(isset($_SESSION['userid'])) {
-        $sql = "SELECT * 
-                FROM friends 
-                WHERE user_one = '".$_SESSION['userid']."' OR user_two = '".$_SESSION['userid']."'";
-        $result = $mysqli->query($sql);
+        // Voorbereiden van de statement om vrienden van de huidige gebruiker op te halen
+        $sql_get_friends = "SELECT * FROM friends WHERE user_one = ? OR user_two = ?";
+        $stmt_get_friends = $mysqli->prepare($sql_get_friends);
+        $stmt_get_friends->bind_param("ii", $_SESSION['userid'], $_SESSION['userid']);
+        $stmt_get_friends->execute();
+        $result_get_friends = $stmt_get_friends->get_result();
 
         echo '
         <table class="table">
@@ -117,18 +122,20 @@
             <tbody>
         ';
 
-        if(mysqli_num_rows($result) > 0) {
-            while ($row = $result->fetch_assoc()) {
+        if($result_get_friends->num_rows > 0) {
+            while ($row = $result_get_friends->fetch_assoc()) {
                 if ($row['user_one'] == $_SESSION['userid']) {
                     $friendid = $row['user_two'];
                 } else {
                     $friendid = $row['user_one'];
                 }
 
-                $sql_friend_information = "SELECT users.profile_picture, users.username 
-                                            FROM users 
-                                            WHERE id = '".$friendid."'";
-                $result_friend_information = $mysqli->query($sql_friend_information);
+                // Voorbereiden van de statement om vriendinformatie op te halen
+                $sql_friend_information = "SELECT profile_picture, username FROM users WHERE id = ?";
+                $stmt_friend_information = $mysqli->prepare($sql_friend_information);
+                $stmt_friend_information->bind_param("i", $friendid);
+                $stmt_friend_information->execute();
+                $result_friend_information = $stmt_friend_information->get_result();
 
                 $friend_information = $result_friend_information->fetch_assoc();
 

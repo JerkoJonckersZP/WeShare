@@ -2,33 +2,35 @@
     require_once 'database/config.php';
     session_start();
 
-    if(isset($_SESSION['userid'])) {
-        if(isset($_POST['requestor']) AND isset($_POST['receiver'])) { 
-            $requestor = $_POST['requestor'];
-            $receiver = $_POST['receiver'];
+    if(isset($_SESSION['userid']) && isset($_POST['requestor']) && isset($_POST['receiver'])) {
+        $requestor = $_POST['requestor'];
+        $receiver = $_POST['receiver'];
 
-            $sql = "SELECT * 
-                    FROM friend_requests 
-                    WHERE requestor = '".$requestor."' AND receiver = '".$receiver."'";
-            $result = $mysqli->query($sql);
+        // Voorbereiden van de statement om het vriendschapsverzoek te controleren en te verwijderen
+        $sql_check_request = "SELECT * FROM friend_requests WHERE requestor = ? AND receiver = ?";
+        $stmt_check_request = $mysqli->prepare($sql_check_request);
+        $stmt_check_request->bind_param("ii", $requestor, $receiver);
+        $stmt_check_request->execute();
+        $result_check_request = $stmt_check_request->get_result();
 
-            if(mysqli_num_rows($result) > 0) {
-                $sql = "DELETE FROM friend_requests 
-                        WHERE requestor = '".$requestor."' AND receiver = '".$receiver."'";
-                $result = $mysqli->query($sql);
-            }
-
-            if(isset($_SERVER['HTTP_REFERER'])) {
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
-            } else {
-                header("Location: index.php");
-            }
+        if($result_check_request->num_rows > 0) {
+            // Voorbereiden van de statement om het vriendschapsverzoek te verwijderen
+            $sql_delete_request = "DELETE FROM friend_requests WHERE requestor = ? AND receiver = ?";
+            $stmt_delete_request = $mysqli->prepare($sql_delete_request);
+            $stmt_delete_request->bind_param("ii", $requestor, $receiver);
+            $stmt_delete_request->execute();
         }
-    }
 
-    if(isset($_SERVER['HTTP_REFERER'])) {
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        if(isset($_SERVER['HTTP_REFERER'])) {
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+        } else {
+            header("Location: index.php");
+        }
     } else {
-        header("Location: index.php");
+        if(isset($_SERVER['HTTP_REFERER'])) {
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+        } else {
+            header("Location: index.php");
+        }
     }
 ?>

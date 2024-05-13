@@ -2,45 +2,43 @@
     require_once 'database/config.php';
     session_start();
 
-    $username = mysqli_real_escape_string($mysqli, $_POST['username']);
-    $description = trim(mysqli_real_escape_string($mysqli, $_POST['description']));
-
-    if($_POST['private-account'] == "on") {
-        $private_account = 1;
-    } else {
-        $private_account = 0;
-    }
-
-    $profile_picture = mysqli_real_escape_string($mysqli, $_FILES['profile-picture']['name']);
-    $profile_picture_temporary = $_FILES['profile-picture']['tmp_name'];
-    $upload_directory = $_SERVER['DOCUMENT_ROOT'] . '/weshare/public/images/';
-
     if(isset($_SESSION['userid'])) {
+        $username = $_POST['username'];
+        $description = trim($_POST['description']);
+        $private_account = isset($_POST['private-account']) && $_POST['private-account'] == "on" ? 1 : 0;
+        $profile_picture = $_FILES['profile-picture']['name'];
+        $profile_picture_temporary = $_FILES['profile-picture']['tmp_name'];
+        $upload_directory = $_SERVER['DOCUMENT_ROOT'] . '/weshare/public/images/';
+
         if(isset($username)) {
-            if(!(empty($profile_picture))) {
-                $sql = "SELECT * FROM users WHERE id = '".$_SESSION['userid']."'";
-                $result = $mysqli->query($sql);
+            // Bereid de SQL-instructie voor
+            $sql = "UPDATE users
+                    SET username = ?, description = ?, private_account = ?";
 
-                $user = $result->fetch_assoc();
+            // Als er een profielfoto is geüpload, voeg deze toe aan de SQL-instructie
+            if(!empty($profile_picture)) {
+                $sql .= ", profile_picture = ?";
+            }
 
-                unlink($upload_directory . $user['profile_picture']);
+            $sql .= " WHERE id = ?";
 
-                $profile_picture_info = pathinfo($profile_picture);
-                $new_profile_picture = "profile_picture_" . $user['id'] . "_" . time() .".png";
+            $stmt = $mysqli->prepare($sql);
+
+            // Bind de parameters aan de SQL-instructie
+            $stmt->bind_param("ssiii", $username, $description, $private_account, $_SESSION['userid']);
+
+            // Als er een profielfoto is geüpload, voeg deze toe aan de bind_param-functie
+            if(!empty($profile_picture)) {
+                // Nieuwe profielfoto-naam genereren
+                $new_profile_picture = "profile_picture_" . $_SESSION['userid'] . "_" . time() .".png";
                 $profile_picture = $new_profile_picture;
-            
                 move_uploaded_file($profile_picture_temporary, $upload_directory . $profile_picture);
 
-                $sql = "UPDATE users
-                        SET username = '".$username."', description = '".$description."', profile_picture = '".$profile_picture."', private_account = '".$private_account."' 
-                        WHERE id = ".$_SESSION['userid']."";
-                $result = $mysqli->query($sql);
-            } else {
-                $sql = "UPDATE users
-                        SET username = '".$username."', description = '".$description."', private_account = '".$private_account."' 
-                        WHERE id = ".$_SESSION['userid']."";
-                $result = $mysqli->query($sql);
+                $stmt->bind_param("ssisi", $username, $description, $private_account, $profile_picture, $_SESSION['userid']);
             }
+
+            // Voer de SQL-instructie uit
+            $stmt->execute();
         }
     }
 

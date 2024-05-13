@@ -4,9 +4,11 @@
 
     if(isset($_SESSION['userid'])) {
         if(isset($_POST['post'])) {
-            $sql = "INSERT INTO comments (user, post, comment) 
-                    VALUES ('".$_SESSION['userid']."','".mysqli_real_escape_string($mysqli, $_POST['post'])."','".mysqli_real_escape_string($mysqli, $_POST['comment'])."')";
-            $result = $mysqli->query($sql);
+            // Bereid de SQL-instructie voor
+            $sql = "INSERT INTO comments (user, post, comment) VALUES (?, ?, ?)";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("iss", $_SESSION['userid'], $_POST['post'], $_POST['comment']);
+            $stmt->execute();
 
             if(isset($_SERVER['HTTP_REFERER'])) {
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
