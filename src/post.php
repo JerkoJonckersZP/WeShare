@@ -175,16 +175,12 @@
                         } else {
                             if(isset($_SESSION['userid'])) {
                                 if($_SESSION['userid'] == $creator_information['id']) {
-                                    $post_information = $result_post_information->fetch_assoc();
-
-                                    $sql_post_creator_information = "SELECT * 
-                                                                     FROM users 
-                                                                     WHERE id = ".$post_information['user']."";
+                                    $sql_post_creator_information = "SELECT * FROM users WHERE id = ".$post_information['user']."";
                                     $result_post_creator_information = $mysqli->query($sql_post_creator_information);
             
                                     $creator_information = $result_post_creator_information->fetch_assoc();
-            
-                                    if($creator_information['private_account'] == 0) {
+
+                                    
                                         $modal_id = 'add_comment_modal_' . $post_information['id'];
             
                                         echo "
@@ -296,7 +292,7 @@
                                                 ';
                                             }
                                         }
-                                    }
+                                    
                                 } else {
                                     $sql_friend_check = "SELECT * 
                                                          FROM friends 
