@@ -21,20 +21,16 @@
             }
 
             $sql .= " WHERE id = ?";
-
-            $stmt = $mysqli->prepare($sql);
-
-            // Bind de parameters aan de SQL-instructie
-            $stmt->bind_param("ssiii", $username, $description, $private_account, $_SESSION['userid']);
-
-            // Als er een profielfoto is geüpload, voeg deze toe aan de bind_param-functie
+            
+            // Aantal parameters is afhankelijk van of er een profielfoto is geüpload
             if(!empty($profile_picture)) {
-                // Nieuwe profielfoto-naam genereren
-                $new_profile_picture = "profile_picture_" . $_SESSION['userid'] . "_" . time() .".png";
-                $profile_picture = $new_profile_picture;
-                move_uploaded_file($profile_picture_temporary, $upload_directory . $profile_picture);
-
-                $stmt->bind_param("ssisi", $username, $description, $private_account, $profile_picture, $_SESSION['userid']);
+                // Als er een profielfoto is, moeten er vijf parameters worden gebonden
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("sssii", $username, $description, $private_account, $profile_picture, $_SESSION['userid']);
+            } else {
+                // Als er geen profielfoto is, moeten er vier parameters worden gebonden
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("ssii", $username, $description, $private_account, $_SESSION['userid']);
             }
 
             // Voer de SQL-instructie uit
