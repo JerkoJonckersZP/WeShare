@@ -76,18 +76,16 @@
 
                                 echo '
                                 <div class="p-3">
-                                    <a href="post.php?post='.$post['id'].'">
-                                        <div class="flex items-center space-x-3 mb-3">
-                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
-                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                            </div>
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                            <img src="../public/images/'. $post['profile_picture'] .'"/>
                                         </div>
-                                        <p class="break-words">'. nl2br($post['message']) .'</p>
-                                    </a>';
+                                        <div>
+                                            <p class="font-bold">'.$post['username'].'</p>
+                                            <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                        </div>
+                                    </div>
+                                    <a href="post.php?post='.$post['id'].'"><p class="break-words">'. nl2br($post['message']) .'</p></a>';
                     
                                     if(!empty($post['photo'])) {
                                         echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -178,18 +176,16 @@
 
                                     echo '
                                     <div class="p-3">
-                                        <a href="post.php?post='.$post['id'].'">
-                                            <div class="flex items-center space-x-3 mb-3">
-                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
-                                                </div>
-                                                <div>
-                                                    <p class="font-bold">'.$post['username'].'</p>
-                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                                </div>
+                                        <div class="flex items-center space-x-3 mb-3">
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
                                             </div>
-                                            <p class="break-words">'. nl2br($post['message']) .'</p>
-                                        </a>';
+                                            <div>
+                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                            </div>
+                                        </div>
+                                        <a href="post.php?post='.$post['id'].'"><p class="break-words">'. nl2br($post['message']) .'</p></a>';
                         
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -289,18 +285,16 @@
 
                                 echo '
                                 <div class="p-3">
-                                    <a href="post.php?post='.$post['id'].'">
-                                        <div class="flex items-center space-x-3 mb-3">
-                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
-                                            </div>
-                                            <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
-                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                            </div>
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                            <img src="../public/images/'. $post['profile_picture'] .'"/>
                                         </div>
-                                        <p class="break-words">'. nl2br($post['message']) .'</p>
-                                    </a>';
+                                        <div>
+                                            <p class="font-bold">'.$post['username'].'</p>
+                                            <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                        </div>
+                                    </div>
+                                    <a href="post.php?post='.$post['id'].'"><p class="break-words">'. nl2br($post['message']) .'</p></a>';
                     
                                     if(!empty($post['photo'])) {
                                         echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
