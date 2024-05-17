@@ -78,7 +78,7 @@
                                 <div class="p-3">
                                     <div class="flex items-center space-x-3 mb-3">
                                         <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                            <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
                                         </div>
                                         <div>
                                             <p class="font-bold">'.$post['username'].'</p>
@@ -178,7 +178,7 @@
                                     <div class="p-3">
                                         <div class="flex items-center space-x-3 mb-3">
                                             <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
                                             </div>
                                             <div>
                                                 <p class="font-bold">'.$post['username'].'</p>
@@ -287,7 +287,7 @@
                                 <div class="p-3">
                                     <div class="flex items-center space-x-3 mb-3">
                                         <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                            <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
                                         </div>
                                         <div>
                                             <p class="font-bold">'.$post['username'].'</p>
@@ -410,7 +410,7 @@
                                     <div class="flex items-center space-x-3">
                                         <div class="avatar">
                                         <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
+                                            <img class="w-full h-full object-cover" src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
                                         </div>
                                         </div>
                                         <div>

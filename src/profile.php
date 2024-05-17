@@ -62,7 +62,7 @@
                         echo '
                         <div class="w-2/4">
                             <div class="p-3">
-                                <img class="w-24 h-24 rounded-full mb-3" src="../public/images/'.$user['profile_picture'].'"/>
+                                <img class="w-24 h-24 rounded-full mb-3 object-cover" src="../public/images/'.$user['profile_picture'].'"/>
                                 <h2 class="text-3xl font-bold mb-3">'.$user['username'].'</h2>
                                 <p class="break-words mb-3">'.nl2br($user['description']).'</p>
                                 ';
@@ -199,7 +199,7 @@
                                             <div class="p-3">
                                                 <div class="flex items-center space-x-3 mb-3">
                                                     <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                        <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                        <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
                                                     </div>
                                                     <div>
                                                         <p class="font-bold">'.$post['username'].'</p>
@@ -299,7 +299,7 @@
                                         <div class="p-3">
                                             <div class="flex items-center space-x-3 mb-3">
                                                 <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                                    <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
                                                 </div>
                                                 <div>
                                                     <p class="font-bold">'.$post['username'].'</p>
@@ -372,10 +372,33 @@
                                 $result = $mysqli->query($sql);
     
                                 while ($post = $result->fetch_assoc()) {
-                                    $modal_id = 'add_comment_modal_' . $post['id'];
+                                    $report_post_modal_id = 'report_post_modal' . $post['id'];
 
                                     echo "
-                                    <dialog id='$modal_id' class='modal'>
+                                    <dialog id='$report_post_modal_id' class='modal'>
+                                        <div class='modal-box'>
+                                            <form method='dialog'>
+                                                <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
+                                            </form>
+                                            <h3 class='font-bold text-2xl'>REPORT <span class='text-[#1987ff]'>POST</span></h3>
+                                            <div class='form-control w-full'>
+                                                <form method='post' action='report-post.php'>
+                                                    <label class='label'>
+                                                        <span class='label-text'>What's your reason for reporting?</span>
+                                                    </label>
+                                                    <textarea class='textarea textarea-bordered h-28 w-full resize-none mb-1' name='reason' placeholder='Please explain why you are reporting this post' maxlength='240' required></textarea>
+                                                    <input type='hidden' name='post' value='".$post['id']."'>
+                                                    <input type='submit' value='REPORT POST' class='btn mt-3 bg-[#f2f2f2] w-full'/>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dialog>
+                                    ";
+
+                                    $add_comment_modal_id = 'add_comment_modal_' . $post['id'];
+
+                                    echo "
+                                    <dialog id='$add_comment_modal_id' class='modal'>
                                         <div class='modal-box'>
                                             <form method='dialog'>
                                                 <button class='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
@@ -397,13 +420,30 @@
 
                                     echo '
                                     <div class="p-3">
-                                        <div class="flex items-center space-x-3 mb-3">
-                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                <img src="../public/images/'. $post['profile_picture'] .'"/>
+                                        <div class="flex items-center justify-between space-x-3 mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                    <img class="w-full h-full object-cover" src="../public/images/'.$post['profile_picture'].'"/>
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
-                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                            <div class="ml-auto">
+                                                <div class="dropdown dropdown-end">
+                                                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                                                        <button class="btn btn-ghost btn-circle">
+                                                            <div class="indicator">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                                                </svg>                                                                                                           
+                                                            </div>
+                                                        </button>
+                                                    </label>
+                                                    <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                                                        <li><a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a></li>                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                         <a href="post.php?post='.$post['id'].'"><p class="break-words">'. nl2br($post['message']) .'</p></a>';
@@ -448,7 +488,7 @@
                                         echo '
                                             </div>
                                             <div class="w-1/2 text-center">
-                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $modal_id . '\').showModal()">Comment</p>
+                                                <p class="hover:cursor-pointer mt-3" onclick="document.getElementById(\'' . $add_comment_modal_id . '\').showModal()">Comment</p>
                                             </div>
                                         ';
 
@@ -470,18 +510,17 @@
                                 while ($post = $result->fetch_assoc()) {
                                     echo '
                                     <div class="p-3">
-                                        <a href="post.php?post='.$post['id'].'">
-                                            <div class="flex items-center space-x-3 mb-3">
-                                                <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                    <img src="../public/images/'. $post['profile_picture'] .'"/>
-                                                </div>
-                                                <div>
-                                                    <p class="font-bold">'.$post['username'].'</p>
-                                                    <div class="text-sm opacity-50">'.$post['created_at'].'</div>
-                                                </div>
+                                        <div class="flex items-center space-x-3 mb-3">
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
                                             </div>
-                                            <p class="break-words">'. nl2br($post['message']) .'</p>
-                                        </a>';
+                                            <div>
+                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                            </div>
+                                        </div>
+                                        <a href="post.php?post='.$post['id'].'"><p class="break-words">'. nl2br($post['message']) .'</p></a>
+                                        ';
         
                                         if(!empty($post['photo'])) {
                                             echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
@@ -549,7 +588,7 @@
                                     <div class="flex items-center space-x-3">
                                         <div class="avatar">
                                         <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
+                                            <img class="w-full h-full object-cover" src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
                                         </div>
                                         </div>
                                         <div>

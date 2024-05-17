@@ -3,15 +3,17 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['message']) && isset($_POST['receiver'])) {
-            $message = $_POST['message'];
-            $receiver = $_POST['receiver'];
+            if(!empty($_POST['message'])) {
+                $message = $_POST['message'];
+                $receiver = $_POST['receiver'];
 
-            // Voorbereiden van de SQL-query met prepared statement
-            $sql = "INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)";
-            $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param("iis", $_SESSION['userid'], $receiver, $message);
-            $stmt->execute();
-            $stmt->close();
+                // Voorbereiden van de SQL-query met prepared statement
+                $sql = "INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("iis", $_SESSION['userid'], $receiver, $message);
+                $stmt->execute();
+                $stmt->close();
+            }
         }
     }
 ?>
@@ -148,7 +150,7 @@
                                     <div class="flex items-center space-x-3">
                                         <div class="avatar">
                                         <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
+                                            <img class="w-full h-full object-cover" src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
                                         </div>
                                         </div>
                                         <div>

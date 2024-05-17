@@ -4,10 +4,9 @@
 
     if(isset($_SESSION['userid'])) {
         if(isset($_POST['post'])) {
-            // Bereid de SQL-instructie voor
-            $sql = "INSERT INTO comments (user, post, comment) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO reports (user, post, reason) VALUES (?, ?, ?)";
             $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param("iis", $_SESSION['userid'], $_POST['post'], $_POST['comment']);
+            $stmt->bind_param("iis", $_SESSION['userid'], $_POST['post'], $_POST['reason']);
             $stmt->execute();
 
             if(isset($_SERVER['HTTP_REFERER'])) {
