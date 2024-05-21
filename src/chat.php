@@ -4,7 +4,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['message']) && isset($_POST['receiver'])) {
             if(!empty($_POST['message'])) {
-                $message = $_POST['message'];
+                $message = trim($_POST['message']);
                 $receiver = $_POST['receiver'];
 
                 // Voorbereiden van de SQL-query met prepared statement
