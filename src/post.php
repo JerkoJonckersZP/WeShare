@@ -76,7 +76,7 @@
                             <div class="p-3">
                                 <div class="flex items-center space-x-3 mb-3">
                                     <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                        <img src="../public/images/'. $creator_information['profile_picture'] .'"/>
+                                        <img class="w-full h-full object-cover" src="../public/images/'. $creator_information['profile_picture'] .'"/>
                                     </div>
                                     <div>
                                         <p class="font-bold">'.$creator_information['username'].'</p>
@@ -160,7 +160,7 @@
                                     <div class="p-3">
                                         <div class="flex items-center space-x-3 mb-3">
                                             <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                <img src="../public/images/'. $comment['profile_picture'] .'"/>
+                                                <img class="w-full h-full object-cover" src="../public/images/'. $comment['profile_picture'] .'"/>
                                             </div>
                                             <div>
                                                 <p class="font-bold">'.$comment['username'].'</p>
@@ -175,12 +175,16 @@
                         } else {
                             if(isset($_SESSION['userid'])) {
                                 if($_SESSION['userid'] == $creator_information['id']) {
-                                    $sql_post_creator_information = "SELECT * FROM users WHERE id = ".$post_information['user']."";
+                                    $post_information = $result_post_information->fetch_assoc();
+
+                                    $sql_post_creator_information = "SELECT * 
+                                                                     FROM users 
+                                                                     WHERE id = ".$post_information['user']."";
                                     $result_post_creator_information = $mysqli->query($sql_post_creator_information);
             
                                     $creator_information = $result_post_creator_information->fetch_assoc();
-
-                                    
+            
+                                    if($creator_information['private_account'] == 0) {
                                         $modal_id = 'add_comment_modal_' . $post_information['id'];
             
                                         echo "
@@ -208,7 +212,7 @@
                                         <div class="p-3">
                                             <div class="flex items-center space-x-3 mb-3">
                                                 <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                    <img src="../public/images/'. $creator_information['profile_picture'] .'"/>
+                                                    <img class="w-full h-full object-cover" src="../public/images/'. $creator_information['profile_picture'] .'"/>
                                                 </div>
                                                 <div>
                                                     <p class="font-bold">'.$creator_information['username'].'</p>
@@ -280,7 +284,7 @@
                                                 <div class="p-3">
                                                     <div class="flex items-center space-x-3 mb-3">
                                                         <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                            <img src="../public/images/'. $comment['profile_picture'] .'"/>
+                                                            <img class="w-full h-full object-cover" src="../public/images/'. $comment['profile_picture'] .'"/>
                                                         </div>
                                                         <div>
                                                             <p class="font-bold">'.$comment['username'].'</p>
@@ -292,7 +296,7 @@
                                                 ';
                                             }
                                         }
-                                    
+                                    }
                                 } else {
                                     $sql_friend_check = "SELECT * 
                                                          FROM friends 
@@ -337,7 +341,7 @@
                                             <div class="p-3">
                                                 <div class="flex items-center space-x-3 mb-3">
                                                     <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                        <img src="../public/images/'. $creator_information['profile_picture'] .'"/>
+                                                        <img class="w-full h-full object-cover" src="../public/images/'. $creator_information['profile_picture'] .'"/>
                                                     </div>
                                                     <div>
                                                         <p class="font-bold">'.$creator_information['username'].'</p>
@@ -409,7 +413,7 @@
                                                     <div class="p-3">
                                                         <div class="flex items-center space-x-3 mb-3">
                                                             <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                                                <img src="../public/images/'. $comment['profile_picture'] .'"/>
+                                                                <img class="w-full h-full object-cover" src="../public/images/'. $comment['profile_picture'] .'"/>
                                                             </div>
                                                             <div>
                                                                 <p class="font-bold">'.$comment['username'].'</p>
@@ -492,7 +496,7 @@
                                     <div class="flex items-center space-x-3">
                                         <div class="avatar">
                                         <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
+                                            <img class="w-full h-full object-cover" src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
                                         </div>
                                         </div>
                                         <div>

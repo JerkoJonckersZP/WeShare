@@ -33,7 +33,7 @@
             <div class='chat chat-end mb-3'>
                 <div class='chat-image avatar'>
                     <div class='w-12 rounded-full'>
-                        <img src='../public/images/".$profile_picture."'/>
+                        <img class='w-full h-full object-cover' src='../public/images/".$profile_picture."'/>
                     </div>
                 </div>
                 <div class='chat-header'>".$username."</div>
@@ -45,7 +45,7 @@
             <div class='chat chat-start mb-3'>
                 <div class='chat-image avatar'>
                     <div class='w-12 rounded-full'>
-                        <img src='../public/images/".$profile_picture."'/>
+                        <img class='w-full h-full object-cover' src='../public/images/".$profile_picture."'/>
                     </div>
                 </div>
                 <div class='chat-header'>".$username."</div>

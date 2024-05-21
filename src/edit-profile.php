@@ -25,7 +25,9 @@
                 $result = $stmt->get_result();
                 $user = $result->fetch_assoc();
 
-                unlink($upload_directory . $user['profile_picture']);
+                if($user['profile_picture'] != "default.png") {
+                    unlink($upload_directory . $user['profile_picture']);
+                }
 
                 $profile_picture_info = pathinfo($profile_picture);
                 $new_profile_picture = "profile_picture_" . $user['id'] . "_" . time() .".png";
