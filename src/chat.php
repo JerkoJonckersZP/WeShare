@@ -3,8 +3,14 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['message']) && isset($_POST['receiver'])) {
+<<<<<<< Updated upstream
             $message = $_POST['message'];
             $receiver = $_POST['receiver'];
+=======
+            if(!empty($_POST['message'])) {
+                $message = trim($_POST['message']);
+                $receiver = $_POST['receiver'];
+>>>>>>> Stashed changes
 
             // Voorbereiden van de SQL-query met prepared statement
             $sql = "INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)";
