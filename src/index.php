@@ -35,7 +35,7 @@
                         $sql = "SELECT posts.id, posts.message, posts.photo, posts.created_at, posts.user, users.profile_picture, users.username
                                 FROM posts
                                 JOIN users ON posts.user = users.id
-                                WHERE posts.user = ".$_SESSION['userid']."
+                                WHERE posts.user = ".$_SESSION['userid']." AND posts.deleted = 0
                                 OR posts.user IN (
                                     SELECT user_two
                                     FROM friends
@@ -198,7 +198,7 @@
                             $sql = "SELECT posts.id, posts.user, posts.message, posts.photo, posts.created_at, users.username, users.profile_picture
                                     FROM posts 
                                     INNER JOIN users ON (posts.user = users.id)
-                                    WHERE posts.user = ".$_SESSION['userid']."
+                                    WHERE posts.user = ".$_SESSION['userid']." AND posts.deleted = 0
                                     ORDER BY posts.created_at DESC";
                             $result = $mysqli->query($sql);
                             
@@ -360,7 +360,7 @@
                         $sql = "SELECT posts.id, posts.user, posts.message, posts.photo, posts.created_at, users.username, users.profile_picture
                                 FROM posts 
                                 INNER JOIN users ON (posts.user = users.id)
-                                WHERE user = ".$_SESSION['userid']."
+                                WHERE user = ".$_SESSION['userid']." AND posts.deleted = 0
                                 ORDER BY posts.created_at DESC";
                         $result = $mysqli->query($sql);
                         

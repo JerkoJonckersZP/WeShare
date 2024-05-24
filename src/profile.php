@@ -69,7 +69,7 @@
                                     
                                 $sql_post_count = "SELECT COUNT(posts.message) AS number_of_posts 
                                                    FROM posts
-                                                   WHERE posts.user = '".$_GET['user']."'";
+                                                   WHERE posts.user = '".$_GET['user']."' AND posts.deleted = 0";
                                 $result_post_count = $mysqli->query($sql_post_count);
                         
                                 $post_count = $result_post_count->fetch_assoc();
@@ -167,7 +167,7 @@
                                         $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                                 FROM posts
                                                 INNER JOIN users ON (posts.user = users.id) 
-                                                WHERE users.id = '".$_GET['user']."'
+                                                WHERE users.id = '".$_GET['user']."' AND posts.deleted = 0
                                                 ORDER BY posts.created_at DESC";
                                         $result = $mysqli->query($sql);
     
@@ -302,7 +302,7 @@
                                     $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                             FROM posts
                                             INNER JOIN users ON (posts.user = users.id) 
-                                            WHERE users.id = '".$_GET['user']."'
+                                            WHERE users.id = '".$_GET['user']."' AND posts.deleted = 0
                                             ORDER BY posts.created_at DESC";
                                     $result = $mysqli->query($sql);
     
@@ -437,7 +437,7 @@
                                 $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                         FROM posts
                                         INNER JOIN users ON (posts.user = users.id) 
-                                        WHERE users.id = '".$_GET['user']."'
+                                        WHERE users.id = '".$_GET['user']."' AND posts.deleted = 0
                                         ORDER BY posts.created_at DESC";
                                 $result = $mysqli->query($sql);
     
@@ -579,7 +579,7 @@
                                 $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                         FROM posts
                                         INNER JOIN users ON (posts.user = users.id) 
-                                        WHERE users.id = '".$_GET['user']."'
+                                        WHERE users.id = '".$_GET['user']."' AND posts.deleted = 0
                                         ORDER BY posts.created_at DESC";
                                 $result = $mysqli->query($sql);
     

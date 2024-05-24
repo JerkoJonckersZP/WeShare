@@ -35,7 +35,7 @@
                 } else {
                     $sql_post_information = "SELECT * 
                                              FROM posts 
-                                             WHERE id = ".$_GET['post']."";
+                                             WHERE id = ".$_GET['post']." AND posts.deleted = 0";
                     $result_post_information = $mysqli->query($sql_post_information);
 
                     if(mysqli_num_rows($result_post_information) > 0) {
