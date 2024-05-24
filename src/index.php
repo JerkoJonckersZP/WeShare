@@ -105,7 +105,9 @@
                                                 <img class="w-full h-full object-cover" src="../public/images/'.$post['profile_picture'].'"/>
                                             </div>
                                             <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <a href="profile.php?user='.$post['user'].'">
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                </a>
                                                 <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                             </div>
                                         </div>
@@ -258,7 +260,9 @@
                                                     <img class="w-full h-full object-cover" src="../public/images/'.$post['profile_picture'].'"/>
                                                 </div>
                                                 <div>
-                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                    <a href="profile.php?user='.$post['user'].'">
+                                                        <p class="font-bold">'.$post['username'].'</p>
+                                                    </a>
                                                     <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                                 </div>
                                             </div>
@@ -420,7 +424,9 @@
                                                 <img class="w-full h-full object-cover" src="../public/images/'.$post['profile_picture'].'"/>
                                             </div>
                                             <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <a href="profile.php?user='.$post['user'].'">
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                </a>
                                                 <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                             </div>
                                         </div>

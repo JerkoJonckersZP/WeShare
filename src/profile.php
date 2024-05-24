@@ -226,7 +226,9 @@
                                                             <img class="w-full h-full object-cover" src="../public/images/'.$post['profile_picture'].'"/>
                                                         </div>
                                                         <div>
-                                                            <p class="font-bold">'.$post['username'].'</p>
+                                                            <a href="profile.php?user='.$post['user'].'">
+                                                                <p class="font-bold">'.$post['username'].'</p>
+                                                            </a>
                                                             <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                                         </div>
                                                     </div>
@@ -361,7 +363,9 @@
                                                         <img class="w-full h-full object-cover" src="../public/images/'.$post['profile_picture'].'"/>
                                                     </div>
                                                     <div>
-                                                        <p class="font-bold">'.$post['username'].'</p>
+                                                        <a href="profile.php?user='.$post['user'].'">
+                                                            <p class="font-bold">'.$post['username'].'</p>
+                                                        </a>
                                                         <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                                     </div>
                                                 </div>
@@ -434,7 +438,7 @@
                                     }
                                 }
                             } else {
-                                $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
+                                $sql = "SELECT posts.id, posts.user, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                         FROM posts
                                         INNER JOIN users ON (posts.user = users.id) 
                                         WHERE users.id = '".$_GET['user']."' AND posts.deleted = 0
@@ -496,7 +500,9 @@
                                                     <img class="w-full h-full object-cover" src="../public/images/'.$post['profile_picture'].'"/>
                                                 </div>
                                                 <div>
-                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                    <a href="profile.php?user='.$post['user'].'">
+                                                        <p class="font-bold">'.$post['username'].'</p>
+                                                    </a>
                                                     <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                                 </div>
                                             </div>
@@ -591,7 +597,9 @@
                                                 <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
                                             </div>
                                             <div>
-                                                <p class="font-bold">'.$post['username'].'</p>
+                                                <a href="profile.php?user='.$post['user'].'">
+                                                    <p class="font-bold">'.$post['username'].'</p>
+                                                </a>
                                                 <div class="text-sm opacity-50">'.$post['created_at'].'</div>
                                             </div>
                                         </div>
