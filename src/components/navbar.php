@@ -1,7 +1,9 @@
 <?php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/weshare/src/database/config.php';
 
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     if(isset($_POST['search-button'])) {
         header("Location: search.php?query=".$_POST['query']."");
@@ -124,7 +126,15 @@
                             </div>
                         </label>
                         <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                            <li><a href="profile.php?user='.$_SESSION['userid'].'">Profile</a></li>
+                            <li><a href="profile.php?user='.$_SESSION['userid'].'">Profile</a></li>';
+
+                    if($user['user_type'] == 2 or $user['user_type'] == 3) {
+                        echo '
+                        <li><a href="dashboard.php">Dashboard</a></li>
+                        ';
+                    }
+
+                    echo '        
                             <li><a href="sign-out.php">Sign out</a></li>
                         </ul>
                     </div>
