@@ -39,12 +39,12 @@
                                 OR posts.user IN (
                                     SELECT user_two
                                     FROM friends
-                                    WHERE user_one = ".$_SESSION['userid']."
+                                    WHERE user_one = ".$_SESSION['userid']." AND posts.deleted = 0
                                 )
                                 OR posts.user IN (
                                     SELECT user_one
                                     FROM friends
-                                    WHERE user_two = ".$_SESSION['userid']."
+                                    WHERE user_two = ".$_SESSION['userid']." AND posts.deleted = 0
                                 )
                                 ORDER BY posts.created_at DESC";
                         $result = $mysqli->query($sql);

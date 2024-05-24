@@ -17,6 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.8.1/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>WeShare</title>
+    <link rel="icon" type="image/x-icon" href="../public/images/weshare.png">
 </head>
 <body class="text-black">
     <div class="p-3">
