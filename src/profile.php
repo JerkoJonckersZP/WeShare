@@ -512,7 +512,13 @@
                                                         </button>
                                                     </label>
                                                     <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                                        <li><a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a></li>                                                    </ul>
+                                                        <li>
+                                                            <form method="post" action="delete-post.php" class="flex w-full">
+                                                                <input type="hidden" name="post" value="'.$post['id'].'">
+                                                                <input type="submit" value="Delete" class="flex-grow text-left hover:cursor-pointer">
+                                                            </form>
+                                                        </li>    
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

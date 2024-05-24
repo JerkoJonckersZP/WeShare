@@ -120,8 +120,26 @@
                                                         </div>
                                                     </button>
                                                 </label>
-                                                <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                                    <li><a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a></li>                                                    </ul>
+                                                <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">';
+                                                    
+                                                    if($post['user'] == $_SESSION['userid']) {
+                                                        echo '
+                                                        <li>
+                                                            <form method="post" action="delete-post.php" class="flex w-full">
+                                                                <input type="hidden" name="post" value="'.$post['id'].'">
+                                                                <input type="submit" value="Delete" class="flex-grow text-left hover:cursor-pointer">
+                                                            </form>
+                                                        </li> 
+                                                        ';
+                                                    } else {
+                                                        echo '
+                                                        <li>
+                                                            <a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a>
+                                                        </li>  
+                                                        ';
+                                                    }   
+                                    echo '                                                 
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -255,8 +273,26 @@
                                                             </div>
                                                         </button>
                                                     </label>
-                                                    <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                                        <li><a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a></li>                                                    </ul>
+                                                    <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">';
+                                                        
+                                                        if($post['user'] == $_SESSION['userid']) {
+                                                            echo '
+                                                            <li>
+                                                                <form method="post" action="delete-post.php" class="flex w-full">
+                                                                    <input type="hidden" name="post" value="'.$post['id'].'">
+                                                                    <input type="submit" value="Delete" class="flex-grow text-left hover:cursor-pointer">
+                                                                </form>
+                                                            </li> 
+                                                            ';
+                                                        } else {
+                                                            echo '
+                                                            <li>
+                                                                <a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a>
+                                                            </li>  
+                                                            ';
+                                                        }   
+                                        echo '                                                 
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -399,8 +435,26 @@
                                                         </div>
                                                     </button>
                                                 </label>
-                                                <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                                    <li><a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a></li>                                                    </ul>
+                                                <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">';
+                                                    
+                                                    if($post['user'] == $_SESSION['userid']) {
+                                                        echo '
+                                                        <li>
+                                                            <form method="post" action="delete-post.php" class="flex w-full">
+                                                                <input type="hidden" name="post" value="'.$post['id'].'">
+                                                                <input type="submit" value="Delete" class="flex-grow text-left hover:cursor-pointer">
+                                                            </form>
+                                                        </li> 
+                                                        ';
+                                                    } else {
+                                                        echo '
+                                                        <li>
+                                                            <a onclick="document.getElementById(\'' . $report_post_modal_id . '\').showModal()">Report</a>
+                                                        </li>  
+                                                        ';
+                                                    }   
+                                    echo '                                                 
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -514,9 +568,9 @@
                                 <td>
                                     <div class="flex items-center space-x-3">
                                         <div class="avatar">
-                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
-                                            <img class="w-full h-full object-cover" src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
-                                        </div>
+                                            <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                                <img class="w-full h-full object-cover" src="../public/images/'.$friend_information['profile_picture'].'" alt="'.$friend_information['profile_picture'].'"/>
+                                            </div>
                                         </div>
                                         <div>
                                         <a href="profile.php?user='.$friendid.'">
