@@ -3,11 +3,10 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['message']) && isset($_POST['receiver'])) {
-            if(!empty($_POST['message'])) {
+            if(!empty(trim($_POST['message']))) {
                 $message = trim($_POST['message']);
                 $receiver = $_POST['receiver'];
 
-                // Voorbereiden van de SQL-query met prepared statement
                 $sql = "INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)";
                 $stmt = $mysqli->prepare($sql);
                 $stmt->bind_param("iis", $_SESSION['userid'], $receiver, $message);

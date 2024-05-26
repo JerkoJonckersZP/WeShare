@@ -301,7 +301,7 @@
                                         }
                                     }
                                 } else {
-                                    $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
+                                    $sql = "SELECT posts.id, posts.user, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                             FROM posts
                                             INNER JOIN users ON (posts.user = users.id) 
                                             WHERE users.id = '".$_GET['user']."' AND posts.deleted = 0
@@ -582,7 +582,7 @@
                             }
                         } else {
                             if(!($user['private_account'] == 1)) {
-                                $sql = "SELECT posts.id, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
+                                $sql = "SELECT posts.id, posts.user, users.profile_picture, users.username, posts.created_at, posts.message, posts.photo
                                         FROM posts
                                         INNER JOIN users ON (posts.user = users.id) 
                                         WHERE users.id = '".$_GET['user']."' AND posts.deleted = 0
