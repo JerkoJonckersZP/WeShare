@@ -38,7 +38,7 @@
                             FROM liked_posts 
                             INNER JOIN posts ON (liked_posts.post = posts.id)
                             INNER JOIN users ON (posts.user = users.id)
-                            WHERE liked_posts.user = ".$_SESSION['userid']."
+                            WHERE liked_posts.user = ".$_SESSION['userid']." AND posts.deleted = 0
                             ORDER BY liked_posts.liked_at DESC";
                     $result = $mysqli->query($sql);
 
