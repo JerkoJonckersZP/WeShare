@@ -43,24 +43,28 @@
                             ORDER BY closed ASC, reported_at DESC";
                     $result = $mysqli->query($sql);
 
-                    while ($row = $result->fetch_assoc()) {
-                        if($row['closed'] == 0) {
-                            $report_status = "UNCLOSED";
-                        } else {
-                            $report_status = "CLOSED";
+                    if(mysqli_num_rows($result) > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            if($row['closed'] == 0) {
+                                $report_status = "UNCLOSED";
+                            } else {
+                                $report_status = "CLOSED";
+                            }
+    
+                            echo '
+                            <details class="collapse bg-base-200">
+                                <summary class="collapse-title text-xl font-medium break-words">
+                                    <div class="badge badge-lg bg-base-300 mr-3">'.$report_status.'</div>
+                                    Post van '.$row['username'].' ('.$row['number_of_reports'].')
+                                </summary>
+                                <div class="collapse-content"> 
+                                    COLLAPSE CONTENT
+                                </div>
+                            </details>
+                            ';
                         }
-
-                        echo '
-                        <details class="collapse bg-base-200">
-                            <summary class="collapse-title text-xl font-medium break-words">
-                                <div class="badge badge-lg bg-base-300 mr-3">'.$report_status.'</div>
-                                Post van '.$row['username'].' ('.$row['number_of_reports'].')
-                            </summary>
-                            <div class="collapse-content"> 
-                                COLLAPSE CONTENT
-                            </div>
-                        </details>
-                        ';
+                    } else {
+                        // Error message aangezien er nog geen reported posts zijn.
                     }
                 ?>
             </div>
