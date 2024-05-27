@@ -35,7 +35,7 @@
         <div class="w-3/4">
             <div class="p-3">
                 <?php
-                    $sql = "SELECT reports.closed, reports.reported_at, reports.post, COUNT(reports.id) AS number_of_reports, users.username 
+                    $sql = "SELECT reports.closed, reports.reported_at, reports.post, COUNT(reports.id) AS number_of_reports, users.username, users.profile_picture, posts.message, posts.photo, posts.created_at, posts.deleted 
                             FROM reports 
                             INNER JOIN posts ON (reports.post = posts.id)
                             INNER JOIN users ON (posts.user = users.id)
@@ -44,21 +44,77 @@
                     $result = $mysqli->query($sql);
 
                     if(mysqli_num_rows($result) > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            if($row['closed'] == 0) {
+                        while ($post = $result->fetch_assoc()) {
+                            if($post['closed'] == 0) {
                                 $report_status = "UNCLOSED";
                             } else {
                                 $report_status = "CLOSED";
                             }
     
                             echo '
-                            <details class="collapse bg-base-200">
+                            <details class="collapse mb-3">
                                 <summary class="collapse-title text-xl font-medium break-words">
                                     <div class="badge badge-lg bg-base-300 mr-3">'.$report_status.'</div>
-                                    Post van '.$row['username'].' ('.$row['number_of_reports'].')
+                                    Post van '.$post['username'].' ('.$post['number_of_reports'].')
                                 </summary>
-                                <div class="collapse-content"> 
-                                    COLLAPSE CONTENT
+                                <div class="collapse-content">
+                            ';
+
+                                $sql_reports = "SELECT reports.post, reports.reason, reports.reported_at, users.username, users.profile_picture 
+                                                FROM reports 
+                                                INNER JOIN users ON (reports.user = users.id) 
+                                                WHERE post = ".$post['post']."";
+                                $result_reports = $mysqli->query($sql_reports);
+
+                                while ($report = $result_reports->fetch_assoc()) {
+                                    echo '
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                            <img class="w-full h-full object-cover" src="../public/images/'. $report['profile_picture'] .'"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold">'.$report['username'].'</p>
+                                            <div class="text-sm opacity-50">'.$report['reported_at'].'</div>
+                                        </div>
+                                    </div>
+                                    <p class="break-words mb-3">'. nl2br($report['reason']) .'</p>';
+                                }
+
+                                    echo '
+                                    <div class="divider"></div> 
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="mask mask-squircle w-12 h-12 rounded-full">
+                                            <img class="w-full h-full object-cover" src="../public/images/'. $post['profile_picture'] .'"/>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold">'.$post['username'].'</p>
+                                            <div class="text-sm opacity-50">'.$post['created_at'].'</div>
+                                        </div>
+                                    </div>
+                                    <p class="break-words">'. nl2br($post['message']) .'</p>';
+
+                                    if(!empty($post['photo'])) {
+                                        echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
+                                    }
+
+                                echo '
+                                <div class="w-full mt-3 flex">
+                                    <div class="w-1/2 mr-1.5">
+                                        <form method="post" action="delete-post.php">
+                                            <input type="hidden" name="post" value="'.$post['post'].'">
+                                            <input type="submit" class="hover:cursor-pointer btn w-full" value="DELETE POST">
+                                        </form>
+                                    </div>
+                                    <div class="w-1/2 ml-1.5">
+                                        <form method="post" action="close-reports.php">
+                                            <input type="hidden" name="post" value="'.$post['post'].'">
+                                            <input type="submit" class="hover:cursor-pointer btn w-full" value="CLOSE REPORTS">
+                                        </form>
+                                    </div>
+                                </div>
+                                ';
+
+                            echo '
                                 </div>
                             </details>
                             ';
