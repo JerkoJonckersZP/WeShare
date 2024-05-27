@@ -35,20 +35,28 @@
         <div class="w-3/4">
             <div class="p-3">
                 <?php
-                    $sql = "SELECT reports.closed, reports.reported_at, reports.post, COUNT(reports.id) AS number_of_reports, users.username, users.profile_picture, posts.message, posts.photo, posts.created_at, posts.deleted 
+                    $sql = "SELECT MAx(reports.reported_at) AS reported_at, reports.post, COUNT(reports.id) AS number_of_reports, users.username, users.profile_picture, posts.message, posts.photo, posts.created_at, posts.deleted 
                             FROM reports 
                             INNER JOIN posts ON (reports.post = posts.id)
                             INNER JOIN users ON (posts.user = users.id)
                             GROUP BY reports.post
-                            ORDER BY closed ASC, reported_at DESC";
+                            ORDER BY reported_at DESC";
                     $result = $mysqli->query($sql);
 
                     if(mysqli_num_rows($result) > 0) {
                         while ($post = $result->fetch_assoc()) {
-                            if($post['closed'] == 0) {
-                                $report_status = "UNCLOSED";
-                            } else {
-                                $report_status = "CLOSED";
+                            $sql_report_status_check = "SELECT reports.closed
+                                                        FROM reports 
+                                                        INNER JOIN users ON (reports.user = users.id) 
+                                                        WHERE post = ".$post['post']."";
+                            $result_report_status_check = $mysqli->query($sql_report_status_check);
+
+                            $report_status = "CLOSED";
+
+                            while ($report_status_check = $result_report_status_check->fetch_assoc()) {
+                                if($report_status_check['closed'] == 0) {
+                                    $report_status = "UNCLOSED";
+                                }
                             }
     
                             echo '
@@ -57,7 +65,7 @@
                                     <div class="badge badge-lg bg-base-300 mr-3">'.$report_status.'</div>
                                     Post van '.$post['username'].' ('.$post['number_of_reports'].')
                                 </summary>
-                                <div class="collapse-content">
+                                <div class="collapse-content mt-3">
                             ';
 
                                 $sql_reports = "SELECT reports.post, reports.reason, reports.reported_at, users.username, users.profile_picture 
@@ -97,22 +105,25 @@
                                         echo '<img class="mx-auto w-full mt-3" src="../public/images/'.$post['photo'].'">';
                                     }
 
-                                echo '
-                                <div class="w-full mt-3 flex">
-                                    <div class="w-1/2 mr-1.5">
-                                        <form method="post" action="delete-post.php">
-                                            <input type="hidden" name="post" value="'.$post['post'].'">
-                                            <input type="submit" class="hover:cursor-pointer btn w-full" value="DELETE POST">
-                                        </form>
+                                if($report_status == "UNCLOSED") {
+                                    echo '
+                                    <div class="w-full mt-3 flex">
+                                        <div class="w-1/2 mr-1.5">
+                                            <form method="post" action="delete-post.php">
+                                                <input type="hidden" name="post" value="'.$post['post'].'">
+                                                <input type="submit" class="hover:cursor-pointer btn w-full" value="DELETE POST">
+                                            </form>
+                                        </div>
+                                        <div class="w-1/2 ml-1.5">
+                                            <form method="post" action="close-reports.php">
+                                                <input type="hidden" name="post" value="'.$post['post'].'">
+                                                <input type="submit" class="hover:cursor-pointer btn w-full" value="CLOSE REPORTS">
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="w-1/2 ml-1.5">
-                                        <form method="post" action="close-reports.php">
-                                            <input type="hidden" name="post" value="'.$post['post'].'">
-                                            <input type="submit" class="hover:cursor-pointer btn w-full" value="CLOSE REPORTS">
-                                        </form>
-                                    </div>
-                                </div>
-                                ';
+                                    ';
+                                }
+                                
 
                             echo '
                                 </div>
