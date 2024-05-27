@@ -22,6 +22,14 @@
                         DASHBOARD
                     </button>
                 </a>
+                <a href='users.php'>
+                    <button class="btn btn-ghost justify-start w-full mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                        USERS
+                    </button>
+                </a>
                 <a href='reports.php'>
                     <button class="btn btn-ghost justify-start w-full mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -35,7 +43,7 @@
         <div class="w-3/4">
             <div class="p-3">
                 <?php
-                    $sql = "SELECT MAx(reports.reported_at) AS reported_at, reports.post, COUNT(reports.id) AS number_of_reports, users.username, users.profile_picture, posts.message, posts.photo, posts.created_at, posts.deleted 
+                    $sql = "SELECT MAX(reports.reported_at) AS reported_at, reports.post, COUNT(reports.id) AS number_of_reports, users.username, users.profile_picture, posts.message, posts.photo, posts.created_at, posts.deleted 
                             FROM reports 
                             INNER JOIN posts ON (reports.post = posts.id)
                             INNER JOIN users ON (posts.user = users.id)

@@ -22,6 +22,14 @@
                         DASHBOARD
                     </button>
                 </a>
+                <a href='users.php'>
+                    <button class="btn btn-ghost justify-start w-full mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                        USERS
+                    </button>
+                </a>
                 <a href='reports.php'>
                     <button class="btn btn-ghost justify-start w-full mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -35,15 +43,23 @@
         <div class="w-3/4">
             <div class="p-3">
                 <?php
-                    $sql = "SELECT * FROM reports WHERE closed = 0 GROUP BY reports.post";
-                    $result = $mysqli->query($sql);
+                    $sql_reports = "SELECT * FROM reports WHERE closed = 0 GROUP BY reports.post";
+                    $result_reports = $mysqli->query($sql_reports);
+
+                    $sql_users = "SELECT * FROM users";
+                    $result_users = $mysqli->query($sql_users);
 
                     echo '
                     <div class="stats w-full">
                         <div class="stat">
                             <div class="stat-title">Total Reported Posts</div>
-                            <div class="stat-value">'.mysqli_num_rows($result).'</div>
+                            <div class="stat-value">'.mysqli_num_rows($result_reports).'</div>
                             <div class="stat-desc underline"><a href="reports.php">View all reported posts</a></div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title">Total Registered Users</div>
+                            <div class="stat-value">'.mysqli_num_rows($result_users).'</div>
+                            <div class="stat-desc underline"><a href="users.php">View all registered users</a></div>
                         </div>
                     </div>
                     ';
