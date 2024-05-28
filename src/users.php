@@ -3,7 +3,18 @@
         session_start();
     }
 
-    if(!isset($_SESSION['userid'])) {
+    require_once 'database/config.php';
+
+    if(isset($_SESSION['userid'])) {
+        $sql_user = "SELECT * FROM users WHERE ".$_SESSION['userid']."";
+        $result_user = $mysqli->query($sql_user);
+
+        $user = $result_user->fetch_assoc();
+
+        if($user['user_type'] == 1) {
+            header("Location: index.php");
+        }
+    } else {
         header("Location: index.php");
     }
 
